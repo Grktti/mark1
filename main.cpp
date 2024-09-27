@@ -5,6 +5,7 @@
 #include "crlAgentGLFW.hpp"
 #include "crljoystick.hpp"
 #include <thread>
+#include "crlAgentmap.hpp"
 
 crlAgentGLFW g_wnd; // GLFW ウィンドウ用クラス
 #define SAMPLING_TIME 0.033 // サンプリング時間 [sec]

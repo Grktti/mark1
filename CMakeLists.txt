@@ -11,7 +11,9 @@ message(STATUS "OPENGL_INCLUDE_DIR=${OPENGL_INCLUDE_DIR}")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
 add_executable(multi_agent_systems main.cpp crlAgentCore.hpp crlAgentCore_config.h
-        crlAgent.hpp)
+        crlAgent.hpp
+        crlAgentmap.hpp
+)
 
 
 if (WIN32)
