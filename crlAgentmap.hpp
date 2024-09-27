@@ -16,7 +16,6 @@
 #include <utility>
 #include <unordered_map>
 #include <cmath>
-
 #include "include/crlGLFW.hpp"
 #include "crlAgentCore.hpp"
 #include "crlAgentGLFW.hpp"
