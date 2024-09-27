@@ -18,9 +18,6 @@
 #include <cmath>
 
 #include "include/crlGLFW.hpp"
-#include <iostream>
-#include <cmath>
-#include <vector>
 #include "crlAgentCore.hpp"
 #include "crlAgentGLFW.hpp"
 
