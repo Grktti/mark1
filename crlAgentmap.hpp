@@ -25,7 +25,7 @@ namespace ac = agentcore;
 
 class agentCoreMap {
 protected:
-    const int task_dim = 2;
+    const int task_dim = 2;  // 2次元の場合
     double m_scale = 1.0;
     bool m_init_flg;
     std::vector<std::vector<std::vector<int>>> m_map; // m_map[i][j][idx] *: exist, id, type
