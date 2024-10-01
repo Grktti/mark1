@@ -12,7 +12,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
 add_executable(multi_agent_systems main.cpp crlAgentCore.hpp crlAgentCore_config.h
         crlAgent.hpp
-        crlAgentmap.hpp
 )
 
 
