@@ -10,8 +10,8 @@
 crlAgentGLFW g_wnd; // GLFW ウィンドウ用クラス
 #define SAMPLING_TIME 0.033 // サンプリング時間 [sec]
 #define FIELD_MAX 100.0 // フィールドの大きさ
-#define AGENT_NUM 12
-#define AGENT_SIGHT 10
+#define AGENT_NUM 20
+#define AGENT_SIGHT 100
 
 // メインループ（この関数内のwhile内を繰り返し実行）
 void main_loop(int speedx) {
@@ -72,7 +72,8 @@ void main_loop(int speedx) {
 //                g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
 //            }
             //エージェントのboidモデルによる駆動
-            agent[i].get_void_model(agent, AGENT_SIGHT);
+            u=agent[i].get_void_model(agent, AGENT_SIGHT);
+            agent[i].drive(u, agent, SAMPLING_TIME);
             g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
 
 

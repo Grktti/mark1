@@ -58,6 +58,9 @@ public:
         std::vector<double> alignment(U_SIZE, 0.0);
         std::vector<double> cohesion(U_SIZE, 0.0);
         int count = 0;
+        double k1 = 1.2;
+        double k2 = 1.0;
+        double k3 = 1.5;
 
         for (const auto& other : others) {
             if (is_same(other)) continue;
@@ -66,7 +69,7 @@ public:
                 // Separation
                 std::vector<double> diff = get_vect(other);
                 for (auto& d : diff) d *= -1.0;
-                for (int i = 0; i < U_SIZE; ++i) separation[i] += diff[i] / dist;
+                for (int i = 0; i < U_SIZE; ++i) separation[i] += diff[i] / (dist*dist);
 
                 // Alignment
                 std::vector<double> other_vel = other.get_velocity();
@@ -91,7 +94,7 @@ public:
             normalize(cohesion);
 
             for (int i = 0; i < U_SIZE; ++i) {
-                u[i] = separation[i] + alignment[i] + cohesion[i];
+                u[i] = k1*separation[i] + k2*alignment[i] + k3*cohesion[i];
             }
             normalize(u);
         }
