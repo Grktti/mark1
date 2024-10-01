@@ -19,6 +19,8 @@
 #include "include/crlGLFW.hpp"
 #include "crlAgentCore.hpp"
 #include "crlAgentGLFW.hpp"
+#define FIELD_MAX 100.0 // フィールドの大きさ
+
 
 
 namespace ac = agentcore;
@@ -71,6 +73,18 @@ public:
         }
         m_init_flg = true;
         return true;
+    }
+
+    bool trail_map(double x, double y){
+        std::vector<std::vector<int>> mark;
+        mark.resize(m_map_size[0]);
+        for (int i = 0; i < m_map_size[0]; i++) {
+            mark[i].resize(m_map_size[1], 0);
+        }
+        int i = (int)(-y+FIELD_MAX);
+        int j = (int)(x+FIELD_MAX);
+        mark[i][j]=1;
+
     }
 
     [[nodiscard]] bool is_arleady_exist(const std::vector<double>& pos) const {
