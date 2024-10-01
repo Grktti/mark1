@@ -51,6 +51,54 @@ public:
         return u;
     }
 
+    //エージェントのボイドモデル
+    const std::vector<double> & get_void_model(const std::vector<crlAgent> &others, double range) {
+        static std::vector<double> u(U_SIZE, 0.0);
+        std::vector<double> separation(U_SIZE, 0.0);
+        std::vector<double> alignment(U_SIZE, 0.0);
+        std::vector<double> cohesion(U_SIZE, 0.0);
+        int count = 0;
+
+        for (const auto& other : others) {
+            if (is_same(other)) continue;
+            double dist = get_dist(other);
+            if (dist < range) {
+                // Separation
+                std::vector<double> diff = get_vect(other);
+                for (auto& d : diff) d *= -1.0;
+                for (int i = 0; i < U_SIZE; ++i) separation[i] += diff[i] / dist;
+
+                // Alignment
+                std::vector<double> other_vel = other.get_velocity();
+                for (int i = 0; i < U_SIZE; ++i) alignment[i] += other_vel[i];
+
+                // Cohesion
+                std::vector<double> other_pos = other.get_position();
+                for (int i = 0; i < U_SIZE; ++i) cohesion[i] += other_pos[i];
+
+                ++count;
+            }
+        }
+
+        if (count > 0) {
+            for (int i = 0; i < U_SIZE; ++i) {
+                alignment[i] /= count;
+                cohesion[i] /= count;
+                cohesion[i] -= get_position()[i]; // Move towards the center of mass
+            }
+            normalize(separation);
+            normalize(alignment);
+            normalize(cohesion);
+
+            for (int i = 0; i < U_SIZE; ++i) {
+                u[i] = separation[i] + alignment[i] + cohesion[i];
+            }
+            normalize(u);
+        }
+
+        return u;
+    }
+
     int get_nearest_agent_id(const std::vector<crlAgent> &others) {
         double dist;
         double min_dist = 100000.0;
