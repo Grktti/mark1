@@ -71,8 +71,7 @@ void main_loop(int speedx) {
                 // 描画用にエージェントをセット [編集不要]
                 g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
             }
-            trail_map();
-
+            agent[i].trail_map(agent[i].get_pos()[0], agent[i].get_pos()[1], FIELD_MAX);
 //            //エージェントのboidモデルによる駆動
 //            u=agent[i].get_void_model(agent, AGENT_SIGHT);
 //            agent[i].drive(u, agent, SAMPLING_TIME);

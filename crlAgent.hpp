@@ -137,6 +137,19 @@ public:
         return dist;
     }
 
+    bool trail_map(double x, double y, double FIELD_MAX) {
+        std::vector<std::vector<int>> mark;
+        int m_map_size[2] = {100, 100};
+        mark.resize(m_map_size[0]);
+        for (int i = 0; i < m_map_size[0]; i++) {
+            mark[i].resize(m_map_size[1], 0);
+        }
+        int i = (int)(-y+FIELD_MAX);
+        int j = (int)(x+FIELD_MAX);
+        mark[i][j]=1;
+
+    }
+
     std::vector<double> &get_vect(const crlAgent &other) {
         static std::vector<double> vect(U_SIZE);
         get_toroidal_vector2(vect, other, 0.0);
