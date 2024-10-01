@@ -140,6 +140,25 @@ public:
         return vect;
     }
 
+    // 速度を取得するメソッドを追加
+    std::vector<double> get_velocity() const {
+        std::vector<double> velocity(U_SIZE);
+        // 速度の計算ロジックをここに追加
+        // 例: m_stat の一部を速度として返す
+        velocity[0] = m_stat[2]; // x方向の速度
+        velocity[1] = m_stat[3]; // y方向の速度
+        return velocity;
+    }
+
+    //位置を取得するメソッドを追加
+    std::vector<double> get_position() const {
+        std::vector<double> position(U_SIZE);
+        position[0] = m_stat[0]; // x方向の位置
+        position[1] = m_stat[1]; // y方向の位置
+        return position;
+    }
+
+
     // 衝突チェック
     bool is_collision(const std::vector<crlAgent> &others, double min_dist=0.1)  {
 
