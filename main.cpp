@@ -10,7 +10,7 @@
 crlAgentGLFW g_wnd; // GLFW ウィンドウ用クラス
 #define SAMPLING_TIME 0.033 // サンプリング時間 [sec]
 #define FIELD_MAX 100.0 // フィールドの大きさ
-#define AGENT_NUM 15
+#define AGENT_NUM 12
 #define AGENT_SIGHT 100
 
 // メインループ（この関数内のwhile内を繰り返し実行）
