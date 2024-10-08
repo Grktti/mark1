@@ -65,11 +65,12 @@ public:
         for (int i = 0; i < task_dim; i++) {
             m_map_size[i] = (int)(2*FIELD_MAX / scale);//scaleによってm_map_sizeを設定(今は200×200)
         }
+
         m_map.resize(m_map_size[0]);//m_map_size[0] にリサイズ(各列は EXIST、ID、TYPE の3つの要素を持つベクター)
         for (int i = 0; i < m_map_size[0]; i++) {
             m_map[i].resize(m_map_size[1]);
             for (int j = 0; j < m_map_size[1]; j++) {
-                m_map[i][j].resize(3, 0); // exist, id, type
+                m_map[i][j].resize(3, 0); // m_map_size[0] x m_map_size[1] x 3 のサイズを持つ3次元ベクターで各要素は０
             }
         }
         m_init_flg = true;
