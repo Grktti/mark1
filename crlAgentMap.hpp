@@ -32,8 +32,8 @@ protected:
     bool m_init_flg;
 //    std::vector<std::vector<int>> m_map; // m_map[i][j] /2次元平面のマップを作成
 
-    std::vector<std::vector<std::vector<double>>> m_map; // m_map[i][j][idx] *: exist, id, type
-    enum idx {
+    std::vector<std::vector<std::vector<double>>> m_map; // m_map[i][j][idx] *: exist, id, typeの3次元ベクトル
+    enum idx {// existで通ったかどうかのフラグ、
         EXIST = 0,
         ID,
         TYPE
@@ -60,11 +60,12 @@ public:
     };
 
     bool init_map(const ac::field_environment_t& env, const double scale) {
-        m_map_size.resize(task_dim, 0);
+        m_map_size.resize(task_dim, 0);//m_map_sizeをtask_dimの次元で初期化
+
         for (int i = 0; i < task_dim; i++) {
-            m_map_size[i] = (int)(DEFAULT_FIELD_X_MAX / scale);
+            m_map_size[i] = (int)(2*FIELD_MAX / scale);//scaleによってm_map_sizeを設定(今は200×200)
         }
-        m_map.resize(m_map_size[0]);
+        m_map.resize(m_map_size[0]);//m_map_size[0] にリサイズ(各列は EXIST、ID、TYPE の3つの要素を持つベクター)
         for (int i = 0; i < m_map_size[0]; i++) {
             m_map[i].resize(m_map_size[1]);
             for (int j = 0; j < m_map_size[1]; j++) {
@@ -75,23 +76,23 @@ public:
         return true;
     }
 
-//
-//
-//    [[nodiscard]] bool is_arleady_exist(const std::vector<double>& pos) const {
-//        if (!m_init_flg) {
-//            std::cerr << "#error: not initialized! ";
-//            std::cerr << "@agentCoreMap::is_arleady_exist()" << std::endl;
-//            return false;
-//        }
-//
-//        std::vector<int> idx;
-//        if (m_map[idx[0]][idx[1]][EXIST] == 1) {
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//
+
+
+    [[nodiscard]] bool is_arleady_exist(const std::vector<double>& pos) const {
+        if (!m_init_flg) {
+            std::cerr << "#error: not initialized! ";
+            std::cerr << "@agentCoreMap::is_arleady_exist()" << std::endl;
+            return false;
+        }
+
+        std::vector<int> idx;
+        if (m_map[idx[0]][idx[1]][EXIST] == 1) {
+            return true;
+        }
+        return false;
+    }
+
+
 //    // エントロピー計算関数
 //    double get_entropy() {
 //        const int width = 100;
@@ -125,11 +126,11 @@ public:
 //
 //        return entropy;
 //    }
-//
-//    bool get_exist(int x, int y) {
-//        return m_map[x][y][EXIST];
-//    }
-//
+
+    bool get_exist(int x, int y) {
+        return m_map[x][y][EXIST];
+    }
+
 //    bool assign(const agentCore& a) {
 //        if (!m_init_flg) {
 //            std::cerr << "#error: not initialized! ";
@@ -208,11 +209,11 @@ public:
 //        }
 //        int cnt = 0;
 //
-//        // for (int i = 0; i < m_map_size[0]; i++) {
-//        // 	for (int j = 0; j < m_map_size[1]; j++) {
-//        // 		if (m_map[i][j][EXIST] == 1) cnt++;
-//        // 	}
-//        // }
+//         for (int i = 0; i < m_map_size[0]; i++) {
+//         	for (int j = 0; j < m_map_size[1]; j++) {
+//         		if (m_map[i][j][EXIST] == 1) cnt++;
+//         	}
+//         }
 //
 //        for (auto &mx: m_map) {
 //            for (auto &mxy: mx) {
@@ -256,7 +257,7 @@ public:
 //        }
 //        return true;
 //    }
-//
+
 //
 //protected:
 //    // カスタムハッシュ関数 （for get_entropy）

@@ -60,7 +60,7 @@ public:
         int count = 0;
         double k1 = 1.2;
         double k2 = 1.0;
-        double k3 = 1.5;
+        double k3 = 2;
 
         for (const auto& other : others) {
             if (is_same(other)) continue;
