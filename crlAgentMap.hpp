@@ -77,6 +77,15 @@ public:
         return true;
     }
 
+    double map_force(const std::vector<double>& pos, const double radius) {
+        return 0.0;
+    }
+
+    int get_index(double pos, int dim) {
+        return (int)((pos + (0.5 * m_env.field_size[dim])) / m_scale);
+
+    };
+
 
 
     [[nodiscard]] bool is_arleady_exist(const std::vector<double>& pos) const {
@@ -87,6 +96,11 @@ public:
         }
 
         std::vector<int> idx;
+        if (!get_index(idx, pos)) {
+            std::cerr << "#error: invalid position! ";
+            std::cerr << "@agentCoreMap::is_arleady_exist()" << std::endl;
+            return false;
+        }
         if (m_map[idx[0]][idx[1]][EXIST] == 1) {
             return true;
         }
