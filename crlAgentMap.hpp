@@ -88,6 +88,8 @@ public:
 
 
 
+
+
     [[nodiscard]] bool is_arleady_exist(const std::vector<double>& pos) const {
         if (!m_init_flg) {
             std::cerr << "#error: not initialized! ";
