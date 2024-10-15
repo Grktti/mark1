@@ -81,10 +81,11 @@ public:
         return 0.0;
     }
 
-    int get_index(double pos, int dim) {
-        return (int)((pos + (0.5 * m_env.field_size[dim])) / m_scale);
-
-    };
+    std::pair<int, int> get_index(const std::vector<double>& pos) const {
+        int i = (int)((pos[0] + FIELD_MAX) / m_scale);
+        int j = (int)((pos[1] + FIELD_MAX) / m_scale);
+        return std::make_pair(i, j);
+    }
 
 
 
@@ -97,13 +98,16 @@ public:
             return false;
         }
 
-        std::vector<int> idx;
-        if (!get_index(idx, pos)) {
+        std::pair<int, int> idx = get_index(pos);
+        int i = idx.first;
+        int j = idx.second;
+
+        if (i < 0 || i >= m_map_size[0] || j < 0 || j >= m_map_size[1]) {
             std::cerr << "#error: invalid position! ";
             std::cerr << "@agentCoreMap::is_arleady_exist()" << std::endl;
             return false;
         }
-        if (m_map[idx[0]][idx[1]][EXIST] == 1) {
+        if (m_map[i][j][EXIST] == 1) {
             return true;
         }
         return false;

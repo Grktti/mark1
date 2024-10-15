@@ -1,11 +1,5 @@
 # ninja log v6
-2	1244	7470576434516799	CMakeFiles/multi_agent_systems.dir/main.cpp.obj	15f25882cb66616d
-1245	1485	7470576446939247	multi_agent_systems.exe	a1619d2b60e108da
-1	1019	7496247074073715	CMakeFiles/multi_agent_systems.dir/main.cpp.obj	2e1a7d071b055243
-1020	1352	7496247084254827	multi_agent_systems.exe	932b030b45aa780b
-8	1542	7500714927930393	CMakeFiles/multi_agent_systems.dir/main.cpp.obj	2e1a7d071b055243
-1542	1755	7500714943269869	multi_agent_systems.exe	932b030b45aa780b
-1	996	7500715472177460	CMakeFiles/multi_agent_systems.dir/main.cpp.obj	2e1a7d071b055243
-996	1110	7500715482128145	multi_agent_systems.exe	932b030b45aa780b
 7	1282	7502426398006692	CMakeFiles/multi_agent_systems.dir/main.cpp.obj	2e1a7d071b055243
 1283	1430	7502426410756843	multi_agent_systems.exe	932b030b45aa780b
+1	1126	7506552312963032	CMakeFiles/multi_agent_systems.dir/main.cpp.obj	2e1a7d071b055243
+1127	1317	7506552324226715	multi_agent_systems.exe	932b030b45aa780b
