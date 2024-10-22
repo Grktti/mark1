@@ -52,7 +52,7 @@ public:
     }
 
     //エージェントのボイドモデル
-    const std::vector<double> & get_void_model(const std::vector<crlAgent> &others, double range) {
+    const std::vector<double> & get_boid_model(const std::vector<crlAgent> &others, double range) {
         static std::vector<double> u(U_SIZE, 0.0);
         std::vector<double> separation(U_SIZE, 0.0);
         std::vector<double> alignment(U_SIZE, 0.0);

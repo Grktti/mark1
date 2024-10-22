@@ -90,6 +90,20 @@ public:
 
 
 
+/*先生のサンプルコード*/
+//    [[nodiscard]] bool is_arleady_exist(const std::vector<double>& pos) const {
+//        if (!m_init_flg) {
+//            std::cerr << "#error: not initialized! ";
+//            std::cerr << "@agentCoreMap::is_arleady_exist()" << std::endl;
+//            return false;
+//        }
+//
+//        std::vector<int> idx;
+//        if (m_map[idx[0]][idx[1]][EXIST] == 1) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     [[nodiscard]] bool is_arleady_exist(const std::vector<double>& pos) const {
         if (!m_init_flg) {
@@ -148,9 +162,10 @@ public:
 //        return entropy;
 //    }
 
-    bool get_exist(int x, int y) {
-        return m_map[x][y][EXIST];
-    }
+/*先生のサンプルコード.is_arleady_exist 関数で使ってるからいらないかも*/
+//    bool get_exist(int x, int y) {
+//        return m_map[x][y][EXIST];
+//    }
 
 //    bool assign(const agentCore& a) {
 //        if (!m_init_flg) {
