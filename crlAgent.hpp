@@ -147,7 +147,7 @@ public:
         int i = (int)(-y+FIELD_MAX);
         int j = (int)(x+FIELD_MAX);
         mark[i][j]=1;
-
+        return true;
     }
 
     std::vector<double> &get_vect(const crlAgent &other) {

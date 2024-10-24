@@ -200,6 +200,10 @@ public:
             put_object(m_x_pos[i], m_x_radius[i], m_x_color[i], m_s*m_g_s, m_x_fill[i]);
             //std::cout <<"#debug["<<i<<"]: rad: "<<m_x_radius[i]<< ", pos: (" << m_x_pos[i][0] << ", " << m_x_pos[i][1] << ")" << std::endl;
         }
+        for(int i=0; i<m_object_num; i++) {
+            draw_object_vector(m_x_pos[i], m_ua, m_s*m_g_s, 1.0, 0.0, 0.0);
+            draw_object_vector(m_x_pos[i], m_ub, m_s*m_g_s, 0.0, 0.0, 1.0);
+        }
 
         //std::cout <<"#debug["<<0<<"]: rad: "<<m_x_radius[0]<< ", pos: (" << m_x_pos[0][0] << ", " << m_x_pos[0][1] << ")" << std::endl;
         //std::cout << "#debug: display" << std::endl;

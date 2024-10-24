@@ -77,14 +77,38 @@ public:
         return true;
     }
 
-    double map_force(const std::vector<double>& pos, const double radius) {
-        return 0.0;
-    }
+        /*力はここで記述しないほうがいいかもだからコメントアウト*/
+    // double map_force(const std::vector<double>& pos, const double radius) {
+    //     return 0.0;
+    // }
 
     std::pair<int, int> get_index(const std::vector<double>& pos) const {
         int i = (int)((pos[0] + FIELD_MAX) / m_scale);
         int j = (int)((pos[1] + FIELD_MAX) / m_scale);
         return std::make_pair(i, j);
+    }
+
+    // 指定されたエージェントの位置と視野半径から障害物を取得
+    std::vector<std::pair<int, int>> getObstaclesInView(const std::vector<double>& pos, double viewRadius) {
+        std::vector<std::pair<int, int>> obstacles;
+        auto idx = get_index(pos);
+        int x = idx.first;
+        int y = idx.second;
+        int viewCells = static_cast<int>(viewRadius / m_scale);
+
+        for (int i = -viewCells; i <= viewCells; ++i) {
+            for (int j = -viewCells; j <= viewCells; ++j) {
+                int nx = x + i;
+                int ny = y + j;
+
+                if (nx >= 0 && nx < m_map_size[0] && ny >= 0 && ny < m_map_size[1]) {
+                    if (m_map[nx][ny][EXIST] == 1) {
+                        obstacles.emplace_back(nx, ny);
+                    }
+                }
+            }
+        }
+        return obstacles;
     }
 
 
