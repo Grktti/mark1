@@ -53,15 +53,17 @@ public:
     }
 
     //エージェントのボイドモデル
-    const std::vector<double> & get_boid_model(const std::vector<crlAgent> &others, double range) {
+    const std::vector<double> & get_boid_model(const std::vector<crlAgent> &others, double range, agentCoreMap& agentMap){
         static std::vector<double> u(U_SIZE, 0.0);
         std::vector<double> separation(U_SIZE, 0.0);
         std::vector<double> alignment(U_SIZE, 0.0);
         std::vector<double> cohesion(U_SIZE, 0.0);
+        std::vector<double> repulsion(U_SIZE, 0.0);
         int count = 0;
         double k1 = 1.2;
         double k2 = 1.0;
         double k3 = 2;
+        double k4 = 3.0;  // 斥力の重み
 
         for (const auto& other : others) {
             if (is_same(other)) continue;
@@ -94,9 +96,39 @@ public:
             normalize(alignment);
             normalize(cohesion);
 
-            for (int i = 0; i < U_SIZE; ++i) {
-                u[i] = k1*separation[i] + k2*alignment[i] + k3*cohesion[i];
+            // マップ上の塗られたセルからの斥力を計算
+            auto idx = agentMap.get_index(get_position());
+            int viewCells = static_cast<int>(range / agentMap.get_scale());
+
+            for (int i = -viewCells; i <= viewCells; ++i) {
+                for (int j = -viewCells; j <= viewCells; ++j) {
+                    int nx = idx.first + i;
+                    int ny = idx.second + j;
+
+                    if (nx >= 0 && nx < agentMap.get_size()[0] && ny >= 0 && ny < agentMap.get_size()[1]) {
+                        if (agentMap.is_arleady_exist({static_cast<double>(nx), static_cast<double>(ny)})) {
+                            double dx = get_position()[0] - (nx * agentMap.get_scale() - FIELD_MAX);
+                            double dy = get_position()[1] - (ny * agentMap.get_scale() - FIELD_MAX);
+                            double distance = std::sqrt(dx * dx + dy * dy);
+                            if (distance > 0) {
+                                double force = 1.0 / (distance * distance);
+                                repulsion[0] += force * (dx / distance);
+                                repulsion[1] += force * (dy / distance);
+                            }
+                        }
+                    }
+                }
             }
+
+            // 最終的な力の計算
+            for (int i = 0; i < U_SIZE; ++i) {
+                u[i] = k1 * separation[i] + k2 * alignment[i] + k3 * cohesion[i] + k4 * repulsion[i];
+            }
+
+            /*ボイドモデルのみの計算*/
+            // for (int i = 0; i < U_SIZE; ++i) {
+            //     u[i] = k1*separation[i] + k2*alignment[i] + k3*cohesion[i];
+            // }
             normalize(u);
         }
 
