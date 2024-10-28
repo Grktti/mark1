@@ -13,7 +13,10 @@ include_directories(${GLFW3_DIR}/include)
 link_directories(${GLFW3_DIR}/lib)
 
 # 実行ファイルを追加
-add_executable(multi_agent_systems main.cpp)
+add_executable(multi_agent_systems main.cpp crlAgentCore.hpp crlAgentCore_config.h
+        crlAgent.hpp
+        crlAgentMap.hpp
+)
 
 # GLFW ライブラリをリンク
 target_link_libraries(multi_agent_systems opengl32 glu32 glfw3)
