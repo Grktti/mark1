@@ -14,6 +14,7 @@
 #include <string>
 #include <cmath>
 #include "crlAgentCore.hpp"
+#include "crlAgentMap.hpp"
 
 class crlAgent : public crlAgentCore {
     double m_field_max;
