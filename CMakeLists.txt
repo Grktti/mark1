@@ -3,6 +3,21 @@ project(multi_agent_systems)
 
 set(CMAKE_CXX_STANDARD 20)
 
+# GLFW ライブラリのパスを追加
+set(GLFW3_DIR "C:/path/to/glfw3")
+
+# インクルードディレクトリ
+include_directories(${GLFW3_DIR}/include)
+
+# リンクディレクトリ
+link_directories(${GLFW3_DIR}/lib)
+
+# 実行ファイルを追加
+add_executable(multi_agent_systems main.cpp)
+
+# GLFW ライブラリをリンク
+target_link_libraries(multi_agent_systems opengl32 glu32 glfw3)
+
 
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})
