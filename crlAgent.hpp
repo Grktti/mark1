@@ -18,6 +18,8 @@
 
 class crlAgent : public crlAgentCore {
     double m_field_max;
+    int map_width;  // Define map_width
+    int map_height; // Define map_height
 public:
     crlAgent() : crlAgentCore() {
         //    std::cout << "crlAgent constructor" << std::endl;
@@ -97,23 +99,29 @@ public:
             normalize(cohesion);
 
             // マップ上の塗られたセルからの斥力を計算
-            auto idx = agentMap.get_index(get_position());
+            auto idx = agentMap.get_index(get_position());//エージェントの座標をセルに変換
             int viewCells = static_cast<int>(range / agentMap.get_scale());
 
+            //viewCellsの範囲内に存在するエージェントからの斥力を計算
             for (int i = -viewCells; i <= viewCells; ++i) {
                 for (int j = -viewCells; j <= viewCells; ++j) {
                     int nx = idx.first + i;
                     int ny = idx.second + j;
 
-                    if (nx >= 0 && nx < agentMap.get_size()[0] && ny >= 0 && ny < agentMap.get_size()[1]) {
-                        if (agentMap.is_arleady_exist({static_cast<double>(nx), static_cast<double>(ny)})) {
-                            double dx = get_position()[0] - (nx * agentMap.get_scale() - FIELD_MAX);
-                            double dy = get_position()[1] - (ny * agentMap.get_scale() - FIELD_MAX);
-                            double distance = std::sqrt(dx * dx + dy * dy);
-                            if (distance > 0) {
-                                double force = 1.0 / (distance * distance);
-                                repulsion[0] += force * (dx / distance);
-                                repulsion[1] += force * (dy / distance);
+                    // マップの境界をチェック
+                    if (nx >= 0 && nx < map_width && ny >= 0 && ny < map_height) {
+                        // エージェントからの距離を計算して円形の範囲内にあるか確認
+                        double distance = std::sqrt(i * i + j * j);
+                        if (distance <= viewCells) {
+                            if (agentMap.is_already_exist({static_cast<double>(nx), static_cast<double>(ny)})) {
+                                double dx = get_position()[0] - (nx * agentMap.get_scale() - FIELD_MAX);
+                                double dy = get_position()[1] - (ny * agentMap.get_scale() - FIELD_MAX);
+                                double distance = std::sqrt(dx * dx + dy * dy);
+                                if (distance > 0) {
+                                    double force = 1.0 / (distance * distance);
+                                    repulsion[0] += force * (dx / distance);
+                                    repulsion[1] += force * (dy / distance);
+                                }
                             }
                         }
                     }
