@@ -18,9 +18,10 @@ add_executable(multi_agent_systems main.cpp crlAgentCore.hpp crlAgentCore_config
         crlAgentMap.hpp
 )
 
+## GLFW ライブラリをリンク
+#target_link_libraries(multi_agent_systems opengl32 glu32 glfw3)
 # GLFW ライブラリをリンク
-target_link_libraries(multi_agent_systems opengl32 glu32 glfw3)
-
+target_link_libraries(multi_agent_systems PRIVATE opengl32 glu32 glfw3)
 
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})
