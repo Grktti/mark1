@@ -30,6 +30,8 @@ protected:
     const int task_dim = 2;  // 2次元の場合
     double m_scale = 1.0;
     bool m_init_flg;
+    std::vector<int> m_size = {100, 100}; // 必要に応じてサイズを調整
+
 //    std::vector<std::vector<int>> m_map; // m_map[i][j] /2次元平面のマップを作成
 
     std::vector<std::vector<std::vector<double>>> m_map; // m_map[i][j][idx] *: exist, id, typeの3次元ベクトル
@@ -81,6 +83,13 @@ public:
     // double map_force(const std::vector<double>& pos, const double radius) {
     //     return 0.0;
     // }
+    double get_scale() const {
+        return m_scale;
+    }
+
+    const std::vector<int>& get_size() const {
+        return m_size;
+    }
 
     std::pair<int, int> get_index(const std::vector<double>& pos) const {
         int i = (int)((pos[0] + FIELD_MAX) / m_scale);
