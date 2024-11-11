@@ -62,10 +62,10 @@ public:
         std::vector<double> cohesion(U_SIZE, 0.0);
         std::vector<double> repulsion(U_SIZE, 0.0);
         int count = 0;
-        double k1 = 1.2;
+        double k1 = 1.3;
         double k2 = 1.0;
-        double k3 = 2;
-        double k4 = 3.0;  // 斥力の重み
+        double k3 = 1.8;
+        double k4 = 4.0;  // 斥力の重み
 
         for (const auto& other : others) {
             if (is_same(other)) continue;
