@@ -16,6 +16,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include "crlAgentMap.hpp"
 
 #define EXP_DIM 2 // 実験環境次元
 
@@ -59,6 +60,8 @@ const std::vector<double> &_magenta() {
 
 class crlAgentGLFW : public crlGLFW {
 
+    const agentCoreMap* m_agentMap = nullptr; // agentCoreMap のポインタを保持
+
     bool m_init_flg;
     int m_object_num;
     // 10x2 の配列を作成し、全要素を 0.0 で初期化
@@ -84,6 +87,11 @@ public:
     crlAgentGLFW() : crlGLFW() {
         m_init_flg = false;
         m_g_s = 0.95;
+    }
+
+    // agentCoreMap のインスタンスを設定するための setter 関数
+    void setMap(const agentCoreMap* agentMap) {
+        m_agentMap = agentMap;
     }
 
     bool init(int object_num, double field_size) {
@@ -195,6 +203,21 @@ public:
 
         show_background();
 
+        // m_agentMap が設定されているか確認
+        if (m_agentMap != nullptr) {
+            // m_map を走査して描画
+            for (int i = 0; i < 200; ++i) {
+                for (int j = 0; j < 200; ++j) {
+                    if (m_agentMap->m_map[i][j][agentCoreMap::EXIST] == 1) {
+                        std::vector<double> pos = { static_cast<double>(i) - 100.0, static_cast<double>(j) - 100.0 };
+                        std::vector<double> color = { 0.0, 1.0, 0.0, 1.0 };
+                        double size = 1.0;
+                        put_square(pos, size, color, m_s * m_g_s, true);
+                    }
+                }
+            }
+        }
+
         glLineWidth(2.0);
         for (int i = 0; i < m_object_num; i++) {
             put_object(m_x_pos[i], m_x_radius[i], m_x_color[i], m_s*m_g_s, m_x_fill[i]);
@@ -255,6 +278,21 @@ public:
         m_x_radius[x_id] = 3.0;
         m_x_fill[x_id] = false;
         return true;
+    }
+
+    // 画面に正方形を描画（マーカーとして）
+    void put_square(const std::vector<double> &center_pos, const double size, std::vector<double> colors, double scale, bool fill) const {
+        glColor4d(colors[0], colors[1], colors[2], colors[3]);
+        if (fill) glBegin(GL_POLYGON);
+        else glBegin(GL_LINE_LOOP);
+
+        double half_size = size / 2.0;
+        glVertex2d((center_pos[0] - half_size) * scale, (center_pos[1] - half_size) * scale);
+        glVertex2d((center_pos[0] + half_size) * scale, (center_pos[1] - half_size) * scale);
+        glVertex2d((center_pos[0] + half_size) * scale, (center_pos[1] + half_size) * scale);
+        glVertex2d((center_pos[0] - half_size) * scale, (center_pos[1] + half_size) * scale);
+
+        glEnd();
     }
 
 
