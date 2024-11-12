@@ -79,6 +79,21 @@ public:
         return true;
     }
 
+    // m_mapの指定された位置に存在フラグを設定するメソッド
+    void setExist(int i, int j, double value) {
+        if (i >= 0 && i < m_map_size[0] && j >= 0 && j < m_map_size[1]) {
+            m_map[i][j][EXIST] = value;
+        }
+    }
+
+    // m_mapの指定された位置の存在フラグを取得するメソッド
+    double getExist(int i, int j) const {
+        if (i >= 0 && i < m_map_size[0] && j >= 0 && j < m_map_size[1]) {
+            return m_map[i][j][EXIST];
+        }
+        return 0.0; // 範囲外の場合のデフォルト値
+    }
+
         /*力はここで記述しないほうがいいかもだからコメントアウト*/
     // double map_force(const std::vector<double>& pos, const double radius) {
     //     return 0.0;
@@ -138,7 +153,7 @@ public:
 //        return false;
 //    }
 
-    [[nodiscard]] bool is_already_exist(const std::vector<double>& pos) const {
+    [[nodiscard]] bool is_already_exist(const std::vector<double>& pos)const {
         if (!m_init_flg) {
             std::cerr << "#error: not initialized! ";
             std::cerr << "@agentCoreMap::is_arleady_exist()" << std::endl;
@@ -158,6 +173,23 @@ public:
             return true;
         }
         return false;
+    }
+
+    // 通過記録のための関数（const を外す）
+    void mark_as_visited(const std::vector<double>& pos) {
+        if (!m_init_flg) {
+            std::cerr << "#error: not initialized! ";
+            std::cerr << "@agentCoreMap::mark_as_visited()" << std::endl;
+            return;
+        }
+
+        std::pair<int, int> idx = get_index(pos);
+        int i = idx.first;
+        int j = idx.second;
+
+        if (i >= 0 && i < m_map_size[0] && j >= 0 && j < m_map_size[1]) {
+            m_map[i][j][EXIST] = 1;  // 通過した場所として記録
+        }
     }
 
 

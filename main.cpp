@@ -8,7 +8,7 @@
 #include "crlAgentMap.hpp"
 
 crlAgentGLFW g_wnd; // GLFW ウィンドウ用クラス
-crlAgentMap g_map; // 地図用クラス
+agentCoreMap g_map; // 地図用クラス
 #define SAMPLING_TIME 0.033 // サンプリング時間 [sec]
 #define FIELD_MAX 100.0 // フィールドの大きさ
 #define AGENT_NUM 23
@@ -46,10 +46,12 @@ void main_loop(int speedx) {
     // メインループ ここを主に編集
     while (true) {
 
-        // m_mapをクリア
-        for (int i = 0; i < 200; ++i)
-            for (int j = 0; j < 200; ++j)
-                g_map.m_map[i][j][0] = 0;
+        // m_map をクリア（すべての値を 0 に設定）
+        for (int i = 0; i < 200; ++i) {
+            for (int j = 0; j < 200; ++j) {
+                g_map.setExist(i, j, 0.0);  // 存在フラグをクリア
+            }
+        }
 
         for (int i = 0; i < agent_num; i++) {
             // 一番近くのエージェント ID を取得 (int nearest_agent_id に代入)
