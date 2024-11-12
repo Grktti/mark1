@@ -91,6 +91,11 @@ void main_loop(int speedx) {
             agent[i].drive(u, agent, SAMPLING_TIME);
             g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
 
+            // 通過確認
+            if (!g_map.is_already_exist(position)) {
+                // 未通過の場合のみ記録
+                g_map.mark_as_visited(position);
+            }
             //agentのナンバーと座標を表示
             std::cout << "agent[" << i << "]: (" << agent[i].get_pos()[0] << ", " << agent[i].get_pos()[1] << ")" << std::endl;
         }

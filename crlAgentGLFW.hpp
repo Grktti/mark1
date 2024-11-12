@@ -208,7 +208,7 @@ public:
             // m_map を走査して描画
             for (int i = 0; i < 200; ++i) {
                 for (int j = 0; j < 200; ++j) {
-                    if (m_agentMap->m_map[i][j][agentCoreMap::EXIST] == 1) {
+                    if (m_agentMap->m_map[i][j][EXIST] == 1) {
                         std::vector<double> pos = { static_cast<double>(i) - 100.0, static_cast<double>(j) - 100.0 };
                         std::vector<double> color = { 0.0, 1.0, 0.0, 1.0 };
                         double size = 1.0;
