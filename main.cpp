@@ -92,6 +92,7 @@ void main_loop(int speedx) {
             g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
 
             // 通過確認
+            auto position = agent[i].get_pos();
             if (!g_map.is_already_exist(position)) {
                 // 未通過の場合のみ記録
                 g_map.mark_as_visited(position);
