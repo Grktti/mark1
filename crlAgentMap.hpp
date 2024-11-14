@@ -78,6 +78,10 @@ public:
         m_init_flg = true;
         return true;
     }
+    //m_map にアクセスするためのメソッド
+    const std::vector<std::vector<std::vector<double>>>& getMap() const {
+        return m_map;
+    }
 
     // m_mapの指定された位置に存在フラグを設定するメソッド
     void setExist(int i, int j, double value) {

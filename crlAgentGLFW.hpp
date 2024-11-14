@@ -16,7 +16,8 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
-#include "crlAgentMap.hpp"
+#include "crlAgentMap.hpp"  // コメントアウトを解除
+
 
 #define EXP_DIM 2 // 実験環境次元
 
@@ -58,9 +59,9 @@ const std::vector<double> &_magenta() {
 }
 
 
-class crlAgentGLFW : public crlGLFW {
+class crlAgentGLFW :public crlGLFW {
 
-    const agentCoreMap* m_agentMap = nullptr; // agentCoreMap のポインタを保持
+    const agentCoreMap* m_agentMap = nullptr;  // agentCoreMap のポインタを保持（protected に設定）
 
     bool m_init_flg;
     int m_object_num;
