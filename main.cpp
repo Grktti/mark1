@@ -90,18 +90,10 @@ void main_loop(int speedx) {
 //                g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
 //            }
 //            agent[i].trail_map(agent[i].get_pos()[0], agent[i].get_pos()[1], FIELD_MAX);
-            //エージェントのboidモデルによる駆動
-            // agentCoreMap agentMap; // このオブジェクトが適切に作成および初期化されていることを確認
-            // u = agent[i].get_boid_model(agent, AGENT_SIGHT, agentMap); // agentMap オブジェクトを渡す//u[0]:x方向の速度, u[1]:y方向の速度
-            // u=agent[i].get_boid_model(agent, AGENT_SIGHT);//u[0]:x方向の速度, u[1]:y方向の速度
-
-            // エージェントの更新
-            for (auto& agent : agent) {
-                auto u = agent.get_boid_model(agent, AGENT_SIGHT, g_map);
-                agent.drive(u, agent, SAMPLING_TIME);
-                g_map.mark_as_visited(agent.get_position());
-            }
-
+            // エージェントのboidモデルによる駆動
+             agentCoreMap agentMap; // このオブジェクトが適切に作成および初期化されていることを確認
+             u = agent[i].get_boid_model(agent, AGENT_SIGHT, agentMap); // agentMap オブジェクトを渡す//u[0]:x方向の速度, u[1]:y方向の速度
+             // u=agent[i].get_boid_model(agent, AGENT_SIGHT);//u[0]:x方向の速度, u[1]:y方向の速度
 
 
             // agent[i].drive(u, agent, SAMPLING_TIME);
