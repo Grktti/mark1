@@ -61,7 +61,7 @@ const std::vector<double> &_magenta() {
 class crlAgentGLFW :public crlGLFW {
 
     // agentCoreMap m_agentMap = nullptr;  // agentCoreMap のポインタを保持
-    agentCoreMap* m_agentMap;  // agentCoreMap のポインタを保持
+    agentCoreMap* m_agentMap = nullptr;  // agentCoreMap のポインタを保持
 
     bool m_init_flg;
     int m_object_num;
