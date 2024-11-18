@@ -11,7 +11,7 @@ crlAgentGLFW g_wnd; // GLFW ウィンドウ用クラス
 agentCoreMap g_map; // 地図用クラス
 #define SAMPLING_TIME 0.033 // サンプリング時間 [sec]
 #define FIELD_MAX 100.0 // フィールドの大きさ
-#define AGENT_NUM 23
+#define AGENT_NUM 22
 #define AGENT_SIGHT 100
 
 //namespace am = agentCoreMap;
