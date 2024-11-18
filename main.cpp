@@ -29,6 +29,10 @@ void main_loop(int speedx) {
     // agent[0].get_vect(agent[1]): ID 0 のエージェントから ID 1 のエージェントへのベクトルを取得
     // agent[0].drive(u, agent, SAMPLING_TIME): ID 0 のエージェントに入力 u を与えて駆動
     //          ※ agent は他のエージェントを含めた配列（衝突判定のため）
+    // マップの初期化
+    ac::field_environment_t env;
+    agentcore::init(env);
+    g_map.init(env, 1.0);
     std::vector<crlAgent> agent(agent_num);
 
     // エージェントの初期化
@@ -42,6 +46,9 @@ void main_loop(int speedx) {
     std::vector<double> u(2); // エージェントへの入力司令ベクトル 2次元 u[0], u[1]
     double sec = 0.0; // 現在時刻
     int nearest_agent_id = 0; // 最も近くのエージェント番号
+
+    // GLFWウィンドウにマップを設定
+    g_wnd.setMap(&g_map);
 
     // メインループ ここを主に編集
     while (true) {
@@ -84,12 +91,21 @@ void main_loop(int speedx) {
 //            }
 //            agent[i].trail_map(agent[i].get_pos()[0], agent[i].get_pos()[1], FIELD_MAX);
             //エージェントのboidモデルによる駆動
-            agentCoreMap agentMap; // このオブジェクトが適切に作成および初期化されていることを確認
-            u = agent[i].get_boid_model(agent, AGENT_SIGHT, agentMap); // agentMap オブジェクトを渡す//u[0]:x方向の速度, u[1]:y方向の速度
+            // agentCoreMap agentMap; // このオブジェクトが適切に作成および初期化されていることを確認
+            // u = agent[i].get_boid_model(agent, AGENT_SIGHT, agentMap); // agentMap オブジェクトを渡す//u[0]:x方向の速度, u[1]:y方向の速度
             // u=agent[i].get_boid_model(agent, AGENT_SIGHT);//u[0]:x方向の速度, u[1]:y方向の速度
 
-            agent[i].drive(u, agent, SAMPLING_TIME);
-            g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
+            // エージェントの更新
+            for (auto& agent : agent) {
+                auto u = agent.get_boid_model(agent, AGENT_SIGHT, g_map);
+                agent.drive(u, agent, SAMPLING_TIME);
+                g_map.mark_as_visited(agent.get_position());
+            }
+
+
+
+            // agent[i].drive(u, agent, SAMPLING_TIME);
+            // g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
 
             // 通過確認
             auto position = agent[i].get_pos();

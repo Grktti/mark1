@@ -119,7 +119,7 @@ public:
     // 指定されたエージェントの位置と視野半径から障害物を取得
     std::vector<std::pair<int, int>> getObstaclesInView(const std::vector<double>& pos, double viewRadius) {
         std::vector<std::pair<int, int>> obstacles;
-        auto idx = get_index(pos);
+        auto idx = get_index(pos);// エージェント位置をマップインデックスに変換
         int x = idx.first;
         int y = idx.second;
         int viewCells = static_cast<int>(viewRadius / m_scale);
@@ -137,6 +137,23 @@ public:
             }
         }
         return obstacles;
+    }
+
+    // 通過記録のための関数（const を外す）
+    void mark_as_visited(const std::vector<double>& pos) {
+        if (!m_init_flg) {
+            std::cerr << "#error: not initialized! ";
+            std::cerr << "@agentCoreMap::mark_as_visited()" << std::endl;
+            return;
+        }
+
+        std::pair<int, int> idx = get_index(pos);
+        int i = idx.first;
+        int j = idx.second;
+
+        if (i >= 0 && i < m_map_size[0] && j >= 0 && j < m_map_size[1]) {
+            m_map[i][j][EXIST] = 1;  // 通過した場所として記録
+        }
     }
 
 
@@ -179,22 +196,6 @@ public:
         return false;
     }
 
-    // 通過記録のための関数（const を外す）
-    void mark_as_visited(const std::vector<double>& pos) {
-        if (!m_init_flg) {
-            std::cerr << "#error: not initialized! ";
-            std::cerr << "@agentCoreMap::mark_as_visited()" << std::endl;
-            return;
-        }
-
-        std::pair<int, int> idx = get_index(pos);
-        int i = idx.first;
-        int j = idx.second;
-
-        if (i >= 0 && i < m_map_size[0] && j >= 0 && j < m_map_size[1]) {
-            m_map[i][j][EXIST] = 1;  // 通過した場所として記録
-        }
-    }
 
 
 //    // エントロピー計算関数
