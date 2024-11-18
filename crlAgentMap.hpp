@@ -152,6 +152,10 @@ public:
         }
     }
 
+    double getMapValue(int i, int j, int k) const {
+        return m_map[i][j][k];
+    }
+
 
 
 
