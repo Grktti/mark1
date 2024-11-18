@@ -14,11 +14,7 @@
 #include <iostream>
 #include <vector>
 #include <utility>
-#include <unordered_map>
-#include <cmath>
-#include "include/crlGLFW.hpp"
 #include "crlAgentCore.hpp"
-#include "crlAgentGLFW.hpp"
 #define FIELD_MAX 100.0 // フィールドの大きさ
 
 

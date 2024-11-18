@@ -1,9 +1,7 @@
 #include <iostream>
 #include <vector>
-#include <cmath>
 #include "crlAgent.hpp"
 #include "crlAgentGLFW.hpp"
-#include "crljoystick.hpp"
 #include <thread>
 #include "crlAgentMap.hpp"
 

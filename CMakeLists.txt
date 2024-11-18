@@ -58,8 +58,9 @@ include_directories(${OPENGL_INCLUDE_DIR})
 message(STATUS "OPENGL_INCLUDE_DIR=${OPENGL_INCLUDE_DIR}")
 
 # インクルードディレクトリを追加
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}include/GLFW)
 
 
 
