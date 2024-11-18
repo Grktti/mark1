@@ -11,12 +11,13 @@
 #ifndef __EXP_GLFW_HPP__
 #define __EXP_GLFW_HPP__
 
-
+#include "crlAgentMap.hpp"
 #include "include/crlGLFW.hpp"
 #include <iostream>
 #include <cmath>
 #include <vector>
-#include "crlAgentMap.hpp"  // コメントアウトを解除
+#include "crlAgentMap.hpp"
+
 
 
 #define EXP_DIM 2 // 実験環境次元
