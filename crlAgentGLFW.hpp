@@ -199,6 +199,10 @@ public:
         m_ub = u;
         return true;
     }
+    bool set_agent_map(agentCoreMap *agentMap) {
+        m_agentMap = agentMap;
+        return true;
+    }
 
     void display() {
 

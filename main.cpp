@@ -6,7 +6,7 @@
 #include "crlAgentMap.hpp"
 
 crlAgentGLFW g_wnd; // GLFW ウィンドウ用クラス
-agentCoreMap g_map; // 地図用クラス
+agentCoreMap agentMap; // このオブジェクトが適切に作成および初期化されていることを確認
 #define SAMPLING_TIME 0.033 // サンプリング時間 [sec]
 #define FIELD_MAX 100.0 // フィールドの大きさ
 #define AGENT_NUM 22
@@ -30,7 +30,6 @@ void main_loop(int speedx) {
     // マップの初期化
     ac::field_environment_t env;
     agentcore::init(env);
-    g_map.init(env, 1.0);
     std::vector<crlAgent> agent(agent_num);
 
     // エージェントの初期化
@@ -45,16 +44,13 @@ void main_loop(int speedx) {
     double sec = 0.0; // 現在時刻
     int nearest_agent_id = 0; // 最も近くのエージェント番号
 
-    // GLFWウィンドウにマップを設定
-    g_wnd.setMap(&g_map);
-
     // メインループ ここを主に編集
     while (true) {
 
         // m_map をクリア（すべての値を 0 に設定）
         for (int i = 0; i < 200; ++i) {
             for (int j = 0; j < 200; ++j) {
-                g_map.setExist(i, j, 0.0);  // 存在フラグをクリア
+                agentMap.setExist(i, j, 0.0);  // 存在フラグをクリア
             }
         }
 
@@ -62,34 +58,7 @@ void main_loop(int speedx) {
             // 一番近くのエージェント ID を取得 (int nearest_agent_id に代入)
             nearest_agent_id = agent[i].get_nearest_agent_id(agent);
 
-//            if (i < 5) {
-//                // エージェントのランダムウォーク入力を獲得 (u[0] = -5〜5, u[1] = -5〜5)
-//                u = agent[i].get_random_walk(5.0);
-//                // エージェントの駆動(入力は u[0], u[1])
-//                agent[i].drive(u, agent, SAMPLING_TIME);
-//                // 描画用にエージェントをセット [編集不要]
-//                g_wnd.set_obj(i, agent[i].get_pos(), _blue(), agent[i].get_radius(), false);
-//            } else if (i < 8) {
-//                // エージェントの入力
-//                u[0] = sin(sec);
-//                u[1] = cos(sec);
-//                // エージェントの駆動(入力は u[0], u[1])
-//                agent[i].drive(u, agent, SAMPLING_TIME);
-//                // 描画用にエージェントをセット [編集不要]
-//                g_wnd.set_obj(i, agent[i].get_pos(), _red(), agent[i].get_radius(), true);
-//            } else {
-//                // nearest_agent_id 方向へのベクトルを取得 u に代入
-//                u = agent[i].get_vect(agent[nearest_agent_id]);
-//                // u を正規化 （大きさを1に）
-//                normalize(u);
-//                // エージェントの駆動(入力は u[0], u[1])
-//                agent[i].drive(u, agent, SAMPLING_TIME);
-//                // 描画用にエージェントをセット [編集不要]
-//                g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
-//            }
-//            agent[i].trail_map(agent[i].get_pos()[0], agent[i].get_pos()[1], FIELD_MAX);
             // エージェントのboidモデルによる駆動
-             agentCoreMap agentMap; // このオブジェクトが適切に作成および初期化されていることを確認
              u = agent[i].get_boid_model(agent, AGENT_SIGHT, agentMap); // agentMap オブジェクトを渡す//u[0]:x方向の速度, u[1]:y方向の速度
              // u=agent[i].get_boid_model(agent, AGENT_SIGHT);//u[0]:x方向の速度, u[1]:y方向の速度
 
@@ -99,10 +68,11 @@ void main_loop(int speedx) {
 
             // 通過確認
             auto position = agent[i].get_pos();
-            if (!g_map.is_already_exist(position)) {
+            if (!agentMap.is_already_exist(position)) {
                 // 未通過の場合のみ記録
-                g_map.mark_as_visited(position);
+                agentMap.mark_as_visited(position);
             }
+
             //agentのナンバーと座標を表示
             std::cout << "agent[" << i << "]: (" << agent[i].get_pos()[0] << ", " << agent[i].get_pos()[1] << ")" << std::endl;
         }
@@ -116,13 +86,15 @@ void main_loop(int speedx) {
 
 int main() {
 
-    g_map.init(ac::field_environment_t{-FIELD_MAX, FIELD_MAX, -FIELD_MAX, FIELD_MAX}, 1.0);
+    agentMap.init(ac::field_environment_t{-FIELD_MAX, FIELD_MAX, -FIELD_MAX, FIELD_MAX}, 1.0);
 
     // g_wnd に g_map を設定
-    g_wnd.setMap(&g_map);
+    g_wnd.setMap(&agentMap);
+    g_wnd.set_agent_map(&agentMap);
 
     g_wnd.init(AGENT_NUM, FIELD_MAX);
     g_wnd.set_shakedown(false); // 慣らし運転モードを終了
+
     // メインループをスレッドで呼び出し
     // 2つめの引数（int型）は再生倍率
     std::thread th1(main_loop, 1);
