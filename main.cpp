@@ -32,6 +32,8 @@ void main_loop(int speedx) {
     agentcore::init(env);
     std::vector<crlAgent> agent(agent_num);
 
+    g_wnd.set_agent_map(&agentMap);
+
     // エージェントの初期化
     for (int i = 0; i < agent_num; i++) {
         // エージェントの初期化
@@ -90,7 +92,6 @@ int main() {
 
     // g_wnd に g_map を設定
     g_wnd.setMap(&agentMap);
-    g_wnd.set_agent_map(&agentMap);
 
     g_wnd.init(AGENT_NUM, FIELD_MAX);
     g_wnd.set_shakedown(false); // 慣らし運転モードを終了
