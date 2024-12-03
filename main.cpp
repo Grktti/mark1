@@ -44,31 +44,31 @@ void main_loop(int speedx) {
             // 一番近くのエージェント ID を取得 (int nearest_agent_id に代入)
             nearest_agent_id = agent[i].get_nearest_agent_id(agent);
 
-            // if (i < 5) {
-            //     // エージェントのランダムウォーク入力を獲得 (u[0] = -5〜5, u[1] = -5〜5)
-            //     u = agent[i].get_random_walk(5.0);
-            //     // エージェントの駆動(入力は u[0], u[1])
-            //     agent[i].drive(u, agent, SAMPLING_TIME);
-            //     // 描画用にエージェントをセット [編集不要]
-            //     g_wnd.set_obj(i, agent[i].get_pos(), _blue(), agent[i].get_radius(), false);
-            // } else if (i < 8) {
-            //     // エージェントの入力
-            //     u[0] = sin(sec);
-            //     u[1] = cos(sec);
-            //     // エージェントの駆動(入力は u[0], u[1])
-            //     agent[i].drive(u, agent, SAMPLING_TIME);
-            //     // 描画用にエージェントをセット [編集不要]
-            //     g_wnd.set_obj(i, agent[i].get_pos(), _red(), agent[i].get_radius(), true);
-            // } else {
-            //     // nearest_agent_id 方向へのベクトルを取得 u に代入
-            //     u = agent[i].get_vect(agent[nearest_agent_id]);
-            //     // u を正規化 （大きさを1に）
-            //     normalize(u);
-            //     // エージェントの駆動(入力は u[0], u[1])
-            //     agent[i].drive(u, agent, SAMPLING_TIME);
-            //     // 描画用にエージェントをセット [編集不要]
-            //     g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
-            // }
+             if (i < 5) {
+                 // エージェントのランダムウォーク入力を獲得 (u[0] = -5〜5, u[1] = -5〜5)
+                 u = agent[i].get_random_walk(5.0);
+                 // エージェントの駆動(入力は u[0], u[1])
+                 agent[i].drive(u, agent, SAMPLING_TIME);
+                 // 描画用にエージェントをセット [編集不要]
+                 g_wnd.set_obj(i, agent[i].get_pos(), _blue(), agent[i].get_radius(), false);
+             } else if (i < 8) {
+                 // エージェントの入力
+                 u[0] = sin(sec);
+                 u[1] = cos(sec);
+                 // エージェントの駆動(入力は u[0], u[1])
+                 agent[i].drive(u, agent, SAMPLING_TIME);
+                 // 描画用にエージェントをセット [編集不要]
+                 g_wnd.set_obj(i, agent[i].get_pos(), _red(), agent[i].get_radius(), true);
+             } else {
+                 // nearest_agent_id 方向へのベクトルを取得 u に代入
+                 u = agent[i].get_vect(agent[nearest_agent_id]);
+                 // u を正規化 （大きさを1に）
+                 normalize(u);
+                 // エージェントの駆動(入力は u[0], u[1])
+                 agent[i].drive(u, agent, SAMPLING_TIME);
+                 // 描画用にエージェントをセット [編集不要]
+                 g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
+             }
         }
         // sleep [描画のために必要] 数値計算のみでは不要
         std::this_thread::sleep_for(

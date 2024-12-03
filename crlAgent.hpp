@@ -51,6 +51,39 @@ public:
         return u;
     }
 
+    //ボイドモデルの作成
+    const std::vector<double> & get_boid_model(const std::vector<crlAgent> &others, double range) {
+        static std::vector<double> u(U_SIZE, 0.0);
+        std::vector<double> separation(U_SIZE, 0.0);
+        std::vector<double> alignment(U_SIZE, 0.0);
+        std::vector<double> cohesion(U_SIZE, 0.0);
+        std::vector<double> repulsion(U_SIZE, 0.0);
+        int count = 0;
+        double k1 = 1.3;
+        double k2 = 1.0;
+        double k3 = 1.8;
+        double k4 = 4.0;
+
+        for (const auto& other : others) {
+            if (is_same(other)) continue;  // 自分自身の場合はスキップ
+            double dist = get_dist(other); // 他のエージェントまでの距離を計算
+            if (dist < range) {
+                // 分離、整列、凝集の計算
+                //分離
+                std::vector<double> diff = get_vect(other);  // 他のエージェントへの位置ベクトルを取得
+                for (auto& d : diff) d *= -1.0;  // 反転して分離の方向に設定
+                for (int i = 0; i < U_SIZE; ++i) separation[i] += diff[i] / (dist * dist);  // 距離の二乗で割って影響を調整
+                // 整列 (Alignment)
+                std::vector<double> other_vel = other.get_velocity();  // 他のエージェントの速度を取得
+                for (int i = 0; i < U_SIZE; ++i) alignment[i] += other_vel[i];
+
+
+
+            }
+        }
+
+    }
+
     int get_nearest_agent_id(const std::vector<crlAgent> &others) {
         double dist;
         double min_dist = 100000.0;
@@ -85,7 +118,14 @@ public:
         dist = get_toroidal_dist2_with_radius(other, 0.0);
         return dist;
     }
+    // エージェントの速度ベクトルを取得
+    std::vector<double> get_velocity() const {
+        std::vector<double> velocity(U_SIZE);
+        get_veloc(velocity);
+        return velocity;
+    }
 
+    //トロイダルベクトルを取得
     std::vector<double> &get_vect(const crlAgent &other) {
         static std::vector<double> vect(U_SIZE);
         get_toroidal_vector2(vect, other, 0.0);
