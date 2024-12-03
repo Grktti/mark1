@@ -16,6 +16,8 @@
 #include <utility>
 #include "crlAgentCore.hpp"
 
+#define FIELD_MAX 100.0 // フィールドの大きさ
+
 
 namespace ac = agentcore;
 
@@ -24,7 +26,6 @@ protected:
     const int task_dim = 2;  // 2次元の場合
     double m_scale = 1.0;
     bool m_init_flg;
-    std::vector<int> m_size = {200, 200}; // 必要に応じてサイズを調整
 
 //    std::vector<std::vector<int>> m_map; // m_map[i][j] /2次元平面のマップを作成
 
@@ -72,10 +73,6 @@ public:
         m_init_flg = true;
         return true;
     }
-    //m_map にアクセスするためのメソッド
-    const std::vector<std::vector<std::vector<double>>>& getMap() const {
-        return m_map;
-    }
 
     // m_mapの指定された位置に存在フラグを設定するメソッド
     void setExist(int i, int j, double value) {
@@ -92,16 +89,8 @@ public:
         return 0.0; // 範囲外の場合のデフォルト値
     }
 
-    /*力はここで記述しないほうがいいかもだからコメントアウト*/
-    // double map_force(const std::vector<double>& pos, const double radius) {
-    //     return 0.0;
-    // }
     double get_scale() const {
         return m_scale;
-    }
-
-    const std::vector<int>& get_size() const {
-        return m_size;
     }
 
     std::pair<int, int> get_index(const std::vector<double>& pos) const {
@@ -110,28 +99,6 @@ public:
         return std::make_pair(i, j);
     }
 
-    // 指定されたエージェントの位置と視野半径から障害物を取得
-    std::vector<std::pair<int, int>> getObstaclesInView(const std::vector<double>& pos, double viewRadius) {
-        std::vector<std::pair<int, int>> obstacles;
-        auto idx = get_index(pos);// エージェント位置をマップインデックスに変換
-        int x = idx.first;
-        int y = idx.second;
-        int viewCells = static_cast<int>(viewRadius / m_scale);
-
-        for (int i = -viewCells; i <= viewCells; ++i) {
-            for (int j = -viewCells; j <= viewCells; ++j) {
-                int nx = x + i;
-                int ny = y + j;
-
-                if (nx >= 0 && nx < m_map_size[0] && ny >= 0 && ny < m_map_size[1]) {
-                    if (m_map[nx][ny][EXIST] == 1) {
-                        obstacles.emplace_back(nx, ny);
-                    }
-                }
-            }
-        }
-        return obstacles;
-    }
 
     // 通過記録のための関数（const を外す）
     void mark_as_visited(const std::vector<double>& pos) {
@@ -158,45 +125,22 @@ public:
 
 
 /*先生のサンプルコード*/
-//    [[nodiscard]] bool is_arleady_exist(const std::vector<double>& pos) const {
-//        if (!m_init_flg) {
-//            std::cerr << "#error: not initialized! ";
-//            std::cerr << "@agentCoreMap::is_arleady_exist()" << std::endl;
-//            return false;
-//        }
-//
-//        std::vector<int> idx;
-//        if (m_map[idx[0]][idx[1]][EXIST] == 1) {
-//            return true;
-//        }
-//        return false;
-//    }
-
-    [[nodiscard]] bool is_already_exist(const std::vector<double>& pos)const {
+    [[nodiscard]] bool is_arleady_exist(const std::vector<double>& pos) const {
         if (!m_init_flg) {
             std::cerr << "#error: not initialized! ";
             std::cerr << "@agentCoreMap::is_arleady_exist()" << std::endl;
             return false;
         }
 
-        std::pair<int, int> idx = get_index(pos);
-        int i = idx.first;
-        int j = idx.second;
-
-        if (i < 0 || i >= m_map_size[0] || j < 0 || j >= m_map_size[1]) {
-            std::cerr << "#error: invalid position! ";
-            std::cerr << "@agentCoreMap::is_arleady_exist()" << std::endl;
-            return false;
-        }
-        if (m_map[i][j][EXIST] == 1) {
+        std::vector<int> idx;
+        if (m_map[idx[0]][idx[1]][EXIST] == 1) {
             return true;
         }
         return false;
     }
 
 
-
-//    // エントロピー計算関数
+    // エントロピー計算関数
 //    double get_entropy() {
 //        const int width = 100;
 //        const int height = 100;
@@ -231,9 +175,9 @@ public:
 //    }
 
 /*先生のサンプルコード.is_arleady_exist 関数で使ってるからいらないかも*/
-//    bool get_exist(int x, int y) {
-//        return m_map[x][y][EXIST];
-//    }
+    bool get_exist(int x, int y) {
+        return m_map[x][y][EXIST];
+    }
 
 //    bool assign(const agentCore& a) {
 //        if (!m_init_flg) {
