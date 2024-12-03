@@ -76,6 +76,10 @@ public:
                 // 整列 (Alignment)
                 std::vector<double> other_vel = other.get_velocity();  // 他のエージェントの速度を取得
                 for (int i = 0; i < U_SIZE; ++i) alignment[i] += other_vel[i];
+                // 凝集 (Cohesion)
+                std::vector<double> other_pos = other.get_position();  // 他のエージェントの位置を取得
+                for (int i = 0; i < U_SIZE; ++i) cohesion[i] += other_pos[i];
+
 
 
 
@@ -123,6 +127,12 @@ public:
         std::vector<double> velocity(U_SIZE);
         get_veloc(velocity);
         return velocity;
+    }
+    // エージェントの位置ベクトルを取得
+    std::vector<double> get_position() const {
+        std::vector<double> position(U_SIZE);
+        get_pos(position);
+        return position;
     }
 
     //トロイダルベクトルを取得
