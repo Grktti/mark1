@@ -79,13 +79,23 @@ public:
                 // 凝集 (Cohesion)
                 std::vector<double> other_pos = other.get_position();  // 他のエージェントの位置を取得
                 for (int i = 0; i < U_SIZE; ++i) cohesion[i] += other_pos[i];
+                // 斥力 (Repulsion)
 
 
-
-
+                ++count;
             }
         }
-
+        if (count > 0) {
+            for (int i = 0; i < U_SIZE; ++i) {
+                separation[i] /= count;
+                alignment[i] /= count;
+                cohesion[i] /= count;
+            }
+            // ボイドモデルの計算
+            for (int i = 0; i < U_SIZE; ++i) {
+                u[i] = k1 * separation[i] + k2 * alignment[i] + k3 * cohesion[i];
+            }
+        }
     }
 
     int get_nearest_agent_id(const std::vector<crlAgent> &others) {
