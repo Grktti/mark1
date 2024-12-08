@@ -4,9 +4,11 @@
 #include "crlAgent.hpp"
 #include "crlAgentGLFW.hpp"
 #include "crljoystick.hpp"
+#include "crlAgentCoreMap.hpp"
 #include <thread>
 
 crlAgentGLFW g_wnd; // GLFW ウィンドウ用クラス
+agentCoreMap g_map; // エージェントマップ用クラス
 #define SAMPLING_TIME 0.033 // サンプリング時間 [sec]
 #define FIELD_MAX 100.0 // フィールドの大きさ
 #define AGENT_NUM 12

@@ -75,8 +75,6 @@ public:
     }
 
 
-
-
     // m_mapの指定された位置に存在フラグを設定するメソッド
     void setExist(int i, int j, double value) {
         if (i >= 0 && i < m_map_size[0] && j >= 0 && j < m_map_size[1]) {
