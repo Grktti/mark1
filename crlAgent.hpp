@@ -141,7 +141,7 @@ public:
     // エージェントの速度ベクトルを取得
     std::vector<double> get_velocity() const {
         std::vector<double> velocity(U_SIZE);
-        get_veloc(velocity);
+        get_veloc();
         return velocity;
     }
     // エージェントの位置ベクトルを取得
