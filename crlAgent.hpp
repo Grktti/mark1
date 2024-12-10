@@ -59,9 +59,9 @@ public:
         std::vector<double> cohesion(U_SIZE, 0.0);
         std::vector<double> repulsion(U_SIZE, 0.0);
         int count = 0;
-        double k1 = 1.3;
+        double k1 = 1.0;
         double k2 = 1.0;
-        double k3 = 1.8;
+        double k3 = 4;
         double k4 = 4.0;
 
         // エージェントの視野範囲を取得
@@ -94,6 +94,7 @@ public:
                 separation[i] /= count;
                 alignment[i] /= count;
                 cohesion[i] /= count;
+                cohesion[i] -= this->get_position()[i];  // 自分の位置との差分を計算
             }
             // ボイドモデルの計算
             for (int i = 0; i < U_SIZE; ++i) {
@@ -146,7 +147,7 @@ public:
     // エージェントの位置ベクトルを取得
     std::vector<double> get_position() const {
         std::vector<double> position(U_SIZE);
-        get_pos(position);
+        get_pos();
         return position;
     }
 
