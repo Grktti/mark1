@@ -61,7 +61,7 @@ public:
         int count = 0;
         double k1 = 0.1;
         double k2 = 1.3;
-        double k3 = 5;
+        double k3 = 100;
         double k4 = 4.0;
 
         // エージェントの視野範囲を取得
@@ -91,7 +91,6 @@ public:
         }
         if (count > 0) {
             for (int i = 0; i < U_SIZE; ++i) {
-                separation[i] /= count;
                 alignment[i] /= count;
                 cohesion[i] /= count;
                 cohesion[i] -= this->get_position()[i];  // 自分の位置との差分を計算
