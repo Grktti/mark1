@@ -52,7 +52,7 @@ public:
     }
 
     //ボイドモデルの作成
-    const std::vector<double> & get_boid_model(const std::vector<crlAgent> &others, double range) {
+    const std::vector<double> & get_boid_model(const std::vector<crlAgent> &others) {
         static std::vector<double> u(U_SIZE, 0.0);
         std::vector<double> separation(U_SIZE, 0.0);
         std::vector<double> alignment(U_SIZE, 0.0);
@@ -64,11 +64,15 @@ public:
         double k3 = 1.8;
         double k4 = 4.0;
 
+        // エージェントの視野範囲を取得
+        double sight_range = this->m_pys.SIGHT_RANGE;  // m_pysはagent_physical_t型のメンバ変数
+        double sight_angle = this->m_pys.SIGHT_ANGLE;
+
         for (const auto& other : others) {
             if (is_same(other)) continue;  // 自分自身の場合はスキップ
             double dist = get_dist(other); // 他のエージェントまでの距離を計算
-            if (dist < range) {
-                // 分離、整列、凝集の計算
+            if (dist < sight_range) {
+
                 //分離
                 std::vector<double> diff = get_vect(other);  // 他のエージェントへの位置ベクトルを取得
                 for (auto& d : diff) d *= -1.0;  // 反転して分離の方向に設定
