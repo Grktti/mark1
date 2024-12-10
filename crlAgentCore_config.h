@@ -82,7 +82,7 @@ std::vector<T> operator*(const double v1, const std::vector<T> &v2) {
 #define DEFAULT_G 4.0 // input gain
 #define DEFAULT_COL_EPS 0.2
 #define DEFAULT_PERSONAL_SPACE !.0
-#define DEFAULT_SIGHT_RANGE 30
+#define DEFAULT_SIGHT_RANGE 200
 #define DEFAULT_SIGHT_ANGLE 360
 #define DEFAULT_SIGHT_SIGMA 0.0
 #define DEFAULT_RADIUS 2.0

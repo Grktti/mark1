@@ -60,7 +60,7 @@ public:
         std::vector<double> repulsion(U_SIZE, 0.0);
         int count = 0;
         double k1 = 0.1;
-        double k2 = 0.5;
+        double k2 = 1.3;
         double k3 = 5;
         double k4 = 4.0;
 
