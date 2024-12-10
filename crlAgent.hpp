@@ -100,6 +100,7 @@ public:
                 u[i] = k1 * separation[i] + k2 * alignment[i] + k3 * cohesion[i];
             }
         }
+        return u;
     }
 
     int get_nearest_agent_id(const std::vector<crlAgent> &others) {
