@@ -128,16 +128,15 @@ public:
                 }
             }
 
-            // 最終的な力の計算
-            for (int i = 0; i < U_SIZE; ++i) {
-                u[i] = k1 * separation[i] + k2 * alignment[i] + k3 * cohesion[i] + k4 * repulsion[i];
-            }
+//            // 最終的な力の計算
+//            for (int i = 0; i < U_SIZE; ++i) {
+//                u[i] = k1 * separation[i] + k2 * alignment[i] + k3 * cohesion[i] + k4 * repulsion[i];
+//            }
 
             /*ボイドモデルのみの計算*/
-            // for (int i = 0; i < U_SIZE; ++i) {
-            //     u[i] = k1*separation[i] + k2*alignment[i] + k3*cohesion[i];
-            // }
-            normalize(u);
+             for (int i = 0; i < U_SIZE; ++i) {
+                 u[i] = k1*separation[i] + k2*alignment[i] + k3*cohesion[i];
+             }
         }
 
         return u;

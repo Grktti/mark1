@@ -66,7 +66,7 @@ void main_loop(int speedx) {
 
 
             // agent[i].drive(u, agent, SAMPLING_TIME);
-            // g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
+             g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
 
             // 通過確認
             auto position = agent[i].get_pos();
