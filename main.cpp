@@ -47,9 +47,12 @@ void main_loop(int speedx) {
             nearest_agent_id = agent[i].get_nearest_agent_id(agent);
 
 
-             u = agent[i].get_boid_model(agent);
-             agent[i].drive(u, agent, SAMPLING_TIME);
-             g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
+            u = agent[i].get_boid_model(agent);
+            agent[i].drive(u, agent, SAMPLING_TIME);
+            g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
+
+            //エージェントが通ったところを1にする
+            g_map.mark_as_visited(agent[i].get_pos());
 
         }
         // sleep [描画のために必要] 数値計算のみでは不要

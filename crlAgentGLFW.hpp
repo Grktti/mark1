@@ -16,6 +16,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include "crlAgentCoreMap.hpp"
 
 #define EXP_DIM 2 // 実験環境次元
 
@@ -201,6 +202,7 @@ public:
             //std::cout <<"#debug["<<i<<"]: rad: "<<m_x_radius[i]<< ", pos: (" << m_x_pos[i][0] << ", " << m_x_pos[i][1] << ")" << std::endl;
         }
 
+
         //std::cout <<"#debug["<<0<<"]: rad: "<<m_x_radius[0]<< ", pos: (" << m_x_pos[0][0] << ", " << m_x_pos[0][1] << ")" << std::endl;
         //std::cout << "#debug: display" << std::endl;
     }
@@ -218,6 +220,11 @@ public:
         m_x_color[id] = color;
         m_x_radius[id] = radius;
         m_x_fill[id] = fill;
+        return true;
+    }
+
+    bool set_agent_map(const agentCoreMap *agentMap) {
+        m_agentmap = agentMap;
         return true;
     }
 
