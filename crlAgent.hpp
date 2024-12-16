@@ -59,22 +59,22 @@ public:
         std::vector<double> cohesion(U_SIZE, 0.0);
         std::vector<double> repulsion(U_SIZE, 0.0);
         int count = 0;
-        double k1 = 0.1;
-        double k2 = 1.3;
+        double k1 = 1;
+        double k2 = 0.1;
         double k3 = 100;
         double k4 = 4.0;
 
         // エージェントの視野範囲を取得
         double sight_range = this->m_pys.SIGHT_RANGE;  // m_pysはagent_physical_t型のメンバ変数
-        double sight_angle = this->m_pys.SIGHT_ANGLE;
+        // double sight_angle = this->m_pys.SIGHT_ANGLE;
 
         for (const auto& other : others) {
             if (is_same(other)) continue;  // 自分自身の場合はスキップ
-            double dist = get_dist(other); // 他のエージェントまでの距離を計算
+            double dist = get_dist2(other); // 他のエージェントまでの距離を計算
             if (dist < sight_range) {
 
                 //分離
-                std::vector<double> diff = get_vect(other);  // 他のエージェントへの位置ベクトルを取得
+                std::vector<double> diff = get_vect2(other);  // 他のエージェントへの位置ベクトルを取得
                 for (auto& d : diff) d *= -1.0;  // 反転して分離の方向に設定
                 for (int i = 0; i < U_SIZE; ++i) separation[i] += diff[i] / (dist * dist);  // 距離の二乗で割って影響を調整
                 // 整列 (Alignment)
@@ -135,12 +135,25 @@ public:
         }
     }
 
-    // エージェント間の距離を計算
+    // エージェント間の距離を計算(トロイダルベクトルver)
     double get_dist(const crlAgent &other) {
         double dist;
         dist = get_toroidal_dist2_with_radius(other, 0.0);
         return dist;
     }
+
+    //エージェント間の距離を計算（通常）
+    double get_dist2(const crlAgent &other) {
+        // 他のエージェントの位置を取得
+        std::vector<double> pos1 = this->get_position();
+        std::vector<double> pos2 = other.get_position();
+
+        // ユークリッド距離を計算
+        double dx = pos2[0] - pos1[0];
+        double dy = pos2[1] - pos1[1];
+        return std::sqrt(dx * dx + dy * dy);
+    }
+
     // エージェントの速度ベクトルを取得
     std::vector<double> get_velocity() const {
         std::vector<double> velocity(U_SIZE);
@@ -158,6 +171,19 @@ public:
     std::vector<double> &get_vect(const crlAgent &other) {
         static std::vector<double> vect(U_SIZE);
         get_toroidal_vector2(vect, other, 0.0);
+        return vect;
+    }
+
+    // 通常位置のベクトルを取得
+    std::vector<double> get_vect2(const crlAgent &other) {
+        // 他のエージェントの位置を取得
+        std::vector<double> pos1 = this->get_position();
+        std::vector<double> pos2 = other.get_position();
+
+        // 通常のベクトル計算
+        std::vector<double> vect(2);
+        vect[0] = pos2[0] - pos1[0];
+        vect[1] = pos2[1] - pos1[1];
         return vect;
     }
 

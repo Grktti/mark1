@@ -71,6 +71,7 @@ void main_loop(int speedx) {
 //                 // 描画用にエージェントをセット [編集不要]
 //                 g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
 //             }
+             // u = agent[i].get_random_walk(5.0);
              u = agent[i].get_boid_model(agent);
              agent[i].drive(u, agent, SAMPLING_TIME);
              g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);

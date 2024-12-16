@@ -1,4 +1,6 @@
 # ninja log v6
-12	1788	7494742024798924	CMakeFiles/multi_agent_systems.dir/main.cpp.obj	a31e1738331f6842
-2	119	7549980425243486	build.ninja	46e8b6eea6639607
-3	544	7494749711279916	multi_agent_systems.exe	24bdec976157ce94
+3	1346	7559537245366119	CMakeFiles/multi_agent_systems.dir/main.cpp.obj	c5773c79ad0120b6
+10	453	7560622915638453	build.ninja	46e8b6eea6639607
+1347	1506	7559537258802312	multi_agent_systems.exe	2b3b5c645a04deee
+3	2465	7560622950518133	CMakeFiles/multi_agent_systems.dir/main.cpp.obj	c5773c79ad0120b6
+2466	2824	7560622975141424	multi_agent_systems.exe	2b3b5c645a04deee
