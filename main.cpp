@@ -8,6 +8,7 @@
 #include "crlAgentMap.hpp"
 
 crlAgentGLFW g_wnd; // GLFW ウィンドウ用クラス
+agentCoreMap agentMap; // このオブジェクトが適切に作成および初期化されていることを確認
 //crlAgentMap g_map; // 地図用クラス
 #define SAMPLING_TIME 0.033 // サンプリング時間 [sec]
 #define FIELD_MAX 100.0 // フィールドの大きさ
@@ -76,7 +77,7 @@ void main_loop(int speedx) {
 //            }
 //            agent[i].trail_map(agent[i].get_pos()[0], agent[i].get_pos()[1], FIELD_MAX);
             //エージェントのboidモデルによる駆動
-            agentCoreMap agentMap; // このオブジェクトが適切に作成および初期化されていることを確認
+
             u = agent[i].get_boid_model(agent, AGENT_SIGHT, agentMap); // agentMap オブジェクトを渡す//u[0]:x方向の速度, u[1]:y方向の速度
             // u=agent[i].get_boid_model(agent, AGENT_SIGHT);//u[0]:x方向の速度, u[1]:y方向の速度
 
