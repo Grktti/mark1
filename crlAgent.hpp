@@ -86,6 +86,7 @@ public:
                 // 斥力 (Repulsion)
 
 
+
                 ++count;
             }
         }
@@ -95,10 +96,10 @@ public:
                 cohesion[i] /= count;
                 cohesion[i] -= this->get_position()[i];  // 自分の位置との差分を計算
             }
-            // 各ベクトルを正規化
-            normalize(separation);
-            normalize(alignment);
-            normalize(cohesion);
+            // 各ベクトルを正規化するならば以下の関数を使う
+            // normalize(separation);
+            // normalize(alignment);
+            // normalize(cohesion);
             // ボイドモデルの計算
             for (int i = 0; i < U_SIZE; ++i) {
                 u[i] = k1 * separation[i] + k2 * alignment[i] + k3 * cohesion[i];
@@ -206,6 +207,8 @@ public:
         }
         return false;
     }
+
+    //
 
     bool add_pos(const std::vector<double> &dlt) {
         std::vector<double> stat;

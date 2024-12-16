@@ -63,6 +63,7 @@ void main_loop(int speedx) {
 int main() {
 
     g_wnd.init(AGENT_NUM, FIELD_MAX);
+    g_map.init({-FIELD_MAX, FIELD_MAX, -FIELD_MAX, FIELD_MAX}, 1.0);
     g_wnd.set_shakedown(false); // 慣らし運転モードを終了
     // メインループをスレッドで呼び出し
     // 2つめの引数（int型）は再生倍率
