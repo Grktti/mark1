@@ -59,6 +59,7 @@ const std::vector<double> &_magenta() {
 
 
 class crlAgentGLFW : public crlGLFW {
+    agentCoreMap *m_agentMap; // エージェントマップ用クラス
 
     bool m_init_flg;
     int m_object_num;
@@ -223,8 +224,9 @@ public:
         return true;
     }
 
-    bool set_agent_map(const agentCoreMap *agentMap) {
-        m_agentmap = agentMap;
+    /*マップクラスのインスタンスをGLFWに設定するための関数*/
+    bool set_agent_map(agentCoreMap *agentMap) {
+        m_agentMap = agentMap;
         return true;
     }
 

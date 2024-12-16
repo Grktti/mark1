@@ -42,6 +42,9 @@ void main_loop(int speedx) {
 
     // メインループ ここを主に編集
     while (true) {
+
+        g_wnd.set_agent_map(&g_map);
+
         for (int i = 0; i < agent_num; i++) {
             // 一番近くのエージェント ID を取得 (int nearest_agent_id に代入)
             nearest_agent_id = agent[i].get_nearest_agent_id(agent);
