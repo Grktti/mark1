@@ -3,7 +3,7 @@
 #include <cmath>
 #include "crlAgent.hpp"
 #include "crlAgentGLFW.hpp"
-#include "crljoystick.hpp"
+// #include "crljoystick.hpp"
 #include "crlAgentCoreMap.hpp"
 #include <thread>
 
