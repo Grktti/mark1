@@ -60,8 +60,8 @@ public:
         std::vector<double> repulsion(U_SIZE, 0.0);
         int count = 0;
         double k1 = 1;
-        double k2 = 0.1;
-        double k3 = 100;
+        double k2 = 1.2;
+        double k3 = 3;
         double k4 = 4.0;
 
         // エージェントの視野範囲を取得
@@ -70,11 +70,11 @@ public:
 
         for (const auto& other : others) {
             if (is_same(other)) continue;  // 自分自身の場合はスキップ
-            double dist = get_dist2(other); // 他のエージェントまでの距離を計算
+            double dist = get_dist(other); // 他のエージェントまでの距離を計算
             if (dist < sight_range) {
 
                 //分離
-                std::vector<double> diff = get_vect2(other);  // 他のエージェントへの位置ベクトルを取得
+                std::vector<double> diff = get_vect(other);  // 他のエージェントへの位置ベクトルを取得
                 for (auto& d : diff) d *= -1.0;  // 反転して分離の方向に設定
                 for (int i = 0; i < U_SIZE; ++i) separation[i] += diff[i] / (dist * dist);  // 距離の二乗で割って影響を調整
                 // 整列 (Alignment)
