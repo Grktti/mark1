@@ -14,6 +14,8 @@
 #include <string>
 #include <cmath>
 #include "crlAgentCore.hpp"
+#include "crlAgentCoreMap.hpp"
+#include "crlAgentGLFW.hpp"
 
 class crlAgent : public crlAgentCore {
     double m_field_max;
@@ -83,10 +85,7 @@ public:
                 // 凝集 (Cohesion)
                 std::vector<double> other_pos = other.get_position();  // 他のエージェントの位置を取得
                 for (int i = 0; i < U_SIZE; ++i) cohesion[i] += other_pos[i];
-                // 斥力 (Repulsion)
-
-
-
+                // 斥力 (Repulsion)視野内のマーカーから斥力を得る
                 ++count;
             }
         }
@@ -106,6 +105,16 @@ public:
             }
         }
         return u;
+    }
+
+    std::vector<std::vector<double>> get_mark (const agentCoreMap &map, const std::vector<crlAgent> &others) {
+        std::vector<std::vector<double>> mark;
+        for (const auto& other : others) {
+            if (is_same(other)) continue;
+            std::vector<double> diff = get_vect(other);
+            mark.push_back(diff);
+        }
+        return mark;
     }
 
     int get_nearest_agent_id(const std::vector<crlAgent> &others) {
