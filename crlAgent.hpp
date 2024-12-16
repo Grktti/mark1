@@ -61,7 +61,7 @@ public:
         int count = 0;
         double k1 = 1;
         double k2 = 1.2;
-        double k3 = 3;
+        double k3 = 1.5;
         double k4 = 4.0;
 
         // エージェントの視野範囲を取得
@@ -157,13 +157,13 @@ public:
     // エージェントの速度ベクトルを取得
     std::vector<double> get_velocity() const {
         std::vector<double> velocity(U_SIZE);
-        get_veloc();
+        velocity = get_veloc();
         return velocity;
     }
     // エージェントの位置ベクトルを取得
     std::vector<double> get_position() const {
         std::vector<double> position(U_SIZE);
-        get_pos();
+        position = get_pos();
         return position;
     }
 
