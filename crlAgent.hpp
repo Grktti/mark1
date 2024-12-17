@@ -17,6 +17,8 @@
 #include "crlAgentCoreMap.hpp"
 #include "crlAgentGLFW.hpp"
 
+inline agentCoreMap g_map; // エージェントマップ用クラス
+
 class crlAgent : public crlAgentCore {
     double m_field_max;
 public:
@@ -107,9 +109,27 @@ public:
         return u;
     }
 
+    //視野内のマーカーの位置を取得する
     std::vector<std::vector<double>> get_mark (const agentCoreMap &map, const std::vector<crlAgent> &agents) {
         std::vector<std::vector<double>> mark;
         auto now_pos = this->get_position();
+        double sight_range = this->m_pys.SIGHT_RANGE;
+
+        //マップの範囲を取得
+        int map_width = g_map.get_map_width ();
+        int map_height = g_map.get_map_height();
+        // 視野範囲内のマーカーをチェック
+        for (int i = 0; i < map_width; ++i) {
+            for (int j = 0; j < map_height; ++j) {
+                double dx = map.get_x_coord(i) - agent_pos[0];
+                double dy = map.get_y_coord(j) - agent_pos[1];
+                double dist = std::sqrt(dx * dx + dy * dy);
+
+                if (dist <= sight_range && map[i][j][0] == 1) {
+                    mark.push_back({i, j});
+                }
+            }
+        }
 
         return mark;
     }
