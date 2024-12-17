@@ -107,13 +107,10 @@ public:
         return u;
     }
 
-    std::vector<std::vector<double>> get_mark (const agentCoreMap &map, const std::vector<crlAgent> &others) {
+    std::vector<std::vector<double>> get_mark (const agentCoreMap &map, const std::vector<crlAgent> &agents) {
         std::vector<std::vector<double>> mark;
-        for (const auto& other : others) {
-            if (is_same(other)) continue;
-            std::vector<double> diff = get_vect(other);
-            mark.push_back(diff);
-        }
+        auto now_pos = this->get_position();
+
         return mark;
     }
 

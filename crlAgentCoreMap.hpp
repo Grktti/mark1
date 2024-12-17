@@ -122,6 +122,14 @@ public:
         return m_map[i][j][k];
     }
 
+    // マップの幅を取得するメソッド
+    int get_map_width() const {
+        return m_map_size[0];
+    }
+    // マップの高さを取得するメソッド
+    int get_map_height() const {
+        return m_map_size[1];
+    }
 
 
 
