@@ -116,21 +116,24 @@ public:
         double sight_range = this->m_pys.SIGHT_RANGE;
 
         //マップの範囲を取得
-        int map_width = g_map.get_map_width ();
-        int map_height = g_map.get_map_height();
+        int map_width = map.get_map_width ();
+        int map_height = map.get_map_height();
         // 視野範囲内のマーカーをチェック
         for (int i = 0; i < map_width; ++i) {
             for (int j = 0; j < map_height; ++j) {
-                double dx = map.get_x_coord(i) - agent_pos[0];
-                double dy = map.get_y_coord(j) - agent_pos[1];
-                double dist = std::sqrt(dx * dx + dy * dy);
+                std::vector<int> idx = {i, j};
+                std::vector<double> pos;
+                if (g_map.get_index()) {
+                    double dx = pos[0] - now_pos[0];
+                    double dy = pos[1] - now_pos[1];
+                    double dist = std::sqrt(dx * dx + dy * dy);
 
-                if (dist <= sight_range && map[i][j][0] == 1) {
-                    mark.push_back({i, j});
+                    if (dist <= sight_range && map[i][j][0] == 1) {
+                        mark.push_back(pos);
+                    }
                 }
             }
         }
-
         return mark;
     }
 
