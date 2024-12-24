@@ -69,6 +69,9 @@ void main_loop(int speedx) {
                 // 描画用にエージェントをセット [編集不要]
                 g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
             }
+
+            // エージェントの現在地をコンソールに出力
+            agent[i].print_position(i);
         }
         // sleep [描画のために必要] 数値計算のみでは不要
         std::this_thread::sleep_for(

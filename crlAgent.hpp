@@ -92,6 +92,19 @@ public:
         return vect;
     }
 
+    // エージェントの位置をコンソールに出力する関数
+    void print_position(int agent_id) const {
+        std::vector<double> position = get_pos();
+        std::cout << "Agent " << agent_id << " Position: (";
+        for (size_t i = 0; i < position.size(); ++i) {
+            std::cout << position[i];
+            if (i < position.size() - 1) {
+                std::cout << ", ";
+            }
+        }
+        std::cout << ")" << std::endl;
+    }
+
     // 衝突チェック
     bool is_collision(const std::vector<crlAgent> &others, double min_dist=0.1)  {
 
