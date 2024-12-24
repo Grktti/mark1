@@ -67,6 +67,7 @@ public:
         double k2 = 1.2;
         double k3 = 1.5;
         double k4 = 4.0;
+        double k5 = 0.5; // Coefficient for random walk
 
         // エージェントの視野範囲を取得
         double sight_range = this->m_pys.SIGHT_RANGE;  // m_pysはagent_physical_t型のメンバ変数
@@ -117,7 +118,8 @@ public:
             // normalize(cohesion);
             // ボイドモデルの計算
             for (int i = 0; i < U_SIZE; ++i) {
-                u[i] = k1 * separation[i] + k2 * alignment[i] + k3 * cohesion[i] + k4 * repulsion[i];
+//                u[i] = k1 * separation[i] + k2 * alignment[i] + k3 * cohesion[i] + k4 * repulsion[i];
+                u[i] = k1 * separation[i] + k2 * alignment[i] + k3 * cohesion[i] + k4 * repulsion[i] + k5 * get_random_walk(1.0)[i];
             }
         }
         return u;
