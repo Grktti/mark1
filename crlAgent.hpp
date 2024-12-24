@@ -117,7 +117,7 @@ public:
             // normalize(cohesion);
             // ボイドモデルの計算
             for (int i = 0; i < U_SIZE; ++i) {
-                u[i] = k1 * separation[i] + k2 * alignment[i] + k3 * cohesion[i];
+                u[i] = k1 * separation[i] + k2 * alignment[i] + k3 * cohesion[i] + k4 * repulsion[i];
             }
         }
         return u;
