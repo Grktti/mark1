@@ -17,7 +17,7 @@
 #include "crlAgentCoreMap.hpp"
 #include "crlAgentGLFW.hpp"
 
-inline agentCoreMap g_map; // エージェントマップ用クラス
+
 
 class crlAgent : public crlAgentCore {
     double m_field_max;
@@ -56,7 +56,7 @@ public:
     }
 
     //ボイドモデルの作成
-    const std::vector<double> & get_boid_model(const std::vector<crlAgent> &others) {
+    const std::vector<double> & get_boid_model(const std::vector<crlAgent> &others, const agentCoreMap &map) {
         static std::vector<double> u(U_SIZE, 0.0);
         std::vector<double> separation(U_SIZE, 0.0);
         std::vector<double> alignment(U_SIZE, 0.0);
@@ -88,6 +88,20 @@ public:
                 std::vector<double> other_pos = other.get_position();  // 他のエージェントの位置を取得
                 for (int i = 0; i < U_SIZE; ++i) cohesion[i] += other_pos[i];
                 // 斥力 (Repulsion)視野内のマーカーから斥力を得る
+                std::vector<std::vector<double>> mark = get_mark(map);  // 視野内のマーカーの位置を取得
+                for (int i = 0; i < mark.size(); i++) {
+                    std::vector<double> diff(U_SIZE);
+                    double dist = 0.0;
+                    for (int j = 0; j < U_SIZE; ++j) {
+                        diff[j] = this->get_position()[j] - mark[i][j];  // エージェントの現在の位置とマーカーの位置の差を計算
+                        dist += diff[j] * diff[j];  // 距離の二乗を計算
+                    }
+                    dist = std::sqrt(dist);  // 距離を計算
+                    for (auto& d : diff) d *= -1.0;  // 反転して分離の方向に設定
+                    for (int j = 0; j < U_SIZE; ++j) {
+                        repulsion[j] += diff[j] / (dist * dist * dist);  // 距離の3乗で割って影響を調整
+                    }
+                }
                 ++count;
             }
         }
@@ -109,8 +123,21 @@ public:
         return u;
     }
 
+    // エージェントの位置をコンソールに出力する関数
+    void print_position(int agent_id) const {
+        std::vector<double> position = get_position();
+        std::cout << "Agent " << agent_id << " Position: (";
+        for (size_t i = 0; i < position.size(); ++i) {
+            std::cout << position[i];
+            if (i < position.size() - 1) {
+                std::cout << ", ";
+            }
+        }
+        std::cout << ")" << std::endl;
+    }
+
     //視野内のマーカーの位置を取得する
-    std::vector<std::vector<double>> get_mark (const agentCoreMap &map, const std::vector<crlAgent> &agents) {
+    std::vector<std::vector<double>> get_mark (const agentCoreMap &map) {
         std::vector<std::vector<double>> mark;
         auto now_pos = this->get_position();
         double sight_range = this->m_pys.SIGHT_RANGE;
@@ -121,16 +148,13 @@ public:
         // 視野範囲内のマーカーをチェック
         for (int i = 0; i < map_width; ++i) {
             for (int j = 0; j < map_height; ++j) {
-                std::vector<int> idx = {i, j};
-                std::vector<double> pos;
-                if (g_map.get_index()) {
-                    double dx = pos[0] - now_pos[0];
-                    double dy = pos[1] - now_pos[1];
-                    double dist = std::sqrt(dx * dx + dy * dy);
+                std::vector<double> pos = map.get_position(i, j);
+                double dx = pos[0] - now_pos[0];
+                double dy = pos[1] - now_pos[1];
+                double dist = std::sqrt(dx * dx + dy * dy);
 
-                    if (dist <= sight_range && map[i][j][0] == 1) {
-                        mark.push_back(pos);
-                    }
+                if (dist <= sight_range && map.getExist(i, j) == 1) {
+                    mark.push_back(pos);
                 }
             }
         }

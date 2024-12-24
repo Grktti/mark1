@@ -100,6 +100,14 @@ public:
         return std::make_pair(i, j);
     }
 
+    // マップの行列から位置を取得するメソッド
+    std::vector<double> get_position(int i, int j) const {
+        std::vector<double> pos(2);
+        pos[0] = i * m_scale - FIELD_MAX;
+        pos[1] = j * m_scale - FIELD_MAX;
+        return pos;
+    }
+
 
     // 通過記録のための関数（const を外す）
     void mark_as_visited(const std::vector<double>& pos) {
