@@ -132,6 +132,22 @@ public:
         glEnd();
     }
 
+    //マーカーとして青色の正方形を描画
+    void put_mark(const std::vector<double> &center_pos, const double harfside, std::vector<double> colors, double scale,
+                    bool fill) const {
+
+        glColor4d(colors[0], colors[1], colors[2], colors[3]);
+        if (fill) glBegin(GL_POLYGON);
+        else glBegin(GL_LINE_LOOP);
+        glColor4d(0.0, 0.0, 1.0, 1.0); // Set color to blue
+        glBegin(GL_POLYGON);
+        glVertex2d((center_pos[0] - harfside) * scale, (center_pos[1] - harfside) * scale);
+        glVertex2d((center_pos[0] + harfside) * scale, (center_pos[1] - harfside) * scale);
+        glVertex2d((center_pos[0] + harfside) * scale, (center_pos[1] + harfside) * scale);
+        glVertex2d((center_pos[0] - harfside) * scale, (center_pos[1] + harfside) * scale);
+        glEnd();
+    }
+
     void draw_object_vector(const std::vector<double> &x, const std::vector<double> &v, double scale, const double r,
                             const double g,
                             const double b) const {
@@ -206,6 +222,13 @@ public:
         for (int i = 0; i < m_object_num; i++) {
             put_object(m_x_pos[i], m_x_radius[i], m_x_color[i], m_s*m_g_s, m_x_fill[i]);
             //std::cout <<"#debug["<<i<<"]: rad: "<<m_x_radius[i]<< ", pos: (" << m_x_pos[i][0] << ", " << m_x_pos[i][1] << ")" << std::endl;
+        }
+        for (int i = 0; i < m_maphigh; i++) {
+            for (int j = 0; j < m_mapwidth; j++) {
+                if (m_map[i][j][EXIST] == 1) {
+                    put_mark(m_agentMap->get_position(i, j), 1.0, _blue(), m_s*m_g_s, true);
+                }
+            }
         }
 
 
