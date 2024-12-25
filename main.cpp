@@ -54,6 +54,8 @@ void main_loop(int speedx) {
             agent[i].drive(u, agent, SAMPLING_TIME);
             g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
 
+
+
             // エージェントの現在地をコンソールに出力
 //            agent[i].print_position(i);
 

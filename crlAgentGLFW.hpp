@@ -114,8 +114,13 @@ public:
         return true;
     }
 
-    void
-    put_object(const std::vector<double> &center_pos, const double radius, std::vector<double> colors, double scale,
+    /*マップクラスのインスタンスをGLFWに設定するための関数*/
+    bool set_agent_map(agentCoreMap *agentMap) {
+        m_agentMap = agentMap;
+        return true;
+    }
+
+    void put_object(const std::vector<double> &center_pos, const double radius, std::vector<double> colors, double scale,
                bool fill) const {
 
         glColor4d(colors[0], colors[1], colors[2], colors[3]);
@@ -224,11 +229,6 @@ public:
         return true;
     }
 
-    /*マップクラスのインスタンスをGLFWに設定するための関数*/
-    bool set_agent_map(agentCoreMap *agentMap) {
-        m_agentMap = agentMap;
-        return true;
-    }
 
     bool set_ope(const std::vector<double> &pos) {
         if (pos.size() != EXP_DIM) {
