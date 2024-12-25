@@ -223,15 +223,26 @@ public:
             put_object(m_x_pos[i], m_x_radius[i], m_x_color[i], m_s*m_g_s, m_x_fill[i]);
             //std::cout <<"#debug["<<i<<"]: rad: "<<m_x_radius[i]<< ", pos: (" << m_x_pos[i][0] << ", " << m_x_pos[i][1] << ")" << std::endl;
         }
-        for (int i = 0; i < m_maphigh; i++) {
-            for (int j = 0; j < m_mapwidth; j++) {
-                if (m_map[i][j][EXIST] == 1) {
-                    put_mark(m_agentMap->get_position(i, j), 1.0, _blue(), m_s*m_g_s, true);
+        // マップの各セルを確認してマーカーを描画
+        double halfside = 0.5;  // セルサイズ1×1の半分
+        for (int i = 0; i < m_agentMap->get_map_width(); i++) {
+            for (int j = 0; j < m_agentMap->get_map_height(); j++) {
+                // マーカーが存在する場合
+                if (m_agentMap->is_arleady_exist(m_agentMap->get_position(i, j))) {  //設定したm_agentMapの座標を取得して、その座標にマーカーが存在するか確認している
+                    // マーカーの中心位置を取得
+                    std::vector<double> center_pos = m_agentMap->get_position(i, j);
+
+                    // セルのマーカーを描画
+                    put_mark(
+                            center_pos,             // セルの中心位置
+                            halfside,               // 半径（セルサイズ1×1の半分）
+                            {0.0, 0.0, 1.0, 1.0},   // 青色 (RGBA)
+                            1.0,                    // スケール
+                            true                    // 塗りつぶし
+                    );
                 }
             }
         }
-
-
         //std::cout <<"#debug["<<0<<"]: rad: "<<m_x_radius[0]<< ", pos: (" << m_x_pos[0][0] << ", " << m_x_pos[0][1] << ")" << std::endl;
         //std::cout << "#debug: display" << std::endl;
     }
