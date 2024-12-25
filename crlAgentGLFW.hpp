@@ -59,7 +59,7 @@ const std::vector<double> &_magenta() {
 
 
 class crlAgentGLFW : public crlGLFW {
-    agentCoreMap *m_agentMap; // エージェントマップ用クラス
+    agentCoreMap *m_agentMap = nullptr; // エージェントマップ用クラス
 
     bool m_init_flg;
     int m_object_num;
@@ -237,7 +237,7 @@ public:
                             center_pos,             // セルの中心位置
                             halfside,               // 半径（セルサイズ1×1の半分）
                             {0.0, 0.0, 1.0, 1.0},   // 青色 (RGBA)
-                            1.0,                    // スケール
+                            m_s*m_g_s,                    // スケール
                             true                    // 塗りつぶし
                     );
                 }

@@ -67,7 +67,7 @@ public:
         double k2 = 1.2;
         double k3 = 1.5;
         double k4 = 4.0;
-        double k5 = 0.5; // Coefficient for random walk
+        double k5 = 0.5; // ランダムウォークの重み
 
         // エージェントの視野範囲を取得
         double sight_range = this->m_pys.SIGHT_RANGE;  // m_pysはagent_physical_t型のメンバ変数

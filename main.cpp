@@ -43,7 +43,7 @@ void main_loop(int speedx) {
     // メインループ ここを主に編集
     while (true) {
 
-        g_wnd.set_agent_map(&g_map);
+
 
 
         for (int i = 0; i < agent_num; i++) {
@@ -54,6 +54,8 @@ void main_loop(int speedx) {
             u = agent[i].get_boid_model(agent, g_map);
             agent[i].drive(u, agent, SAMPLING_TIME);
             g_wnd.set_obj(i, agent[i].get_pos(), _green(), agent[i].get_radius(), true);
+
+            g_wnd.set_agent_map(&g_map);
 
 
             // エージェントの現在地をコンソールに出力
